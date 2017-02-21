@@ -7,6 +7,7 @@
 %define prefix_bin %{prefix_dir}/bin
 %define prefix_inc %{prefix_dir}/include
 %define _unpackaged_files_terminate_build 0
+%define _defaultdocdir %{_prefix}/share/doc
 
 %define debug_package %{nil}
 
@@ -61,6 +62,7 @@ make
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 make DESTDIR=%{buildroot} install-strip
+mkdir -p %{buildroot}%{_defaultdocdir}
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -77,10 +79,8 @@ make DESTDIR=%{buildroot} install-strip
 %attr(0755,root,root) %{_bindir}/curl
 %{_libdir}/libcurl.so*
 %dir %{_prefix}
+%dir %{_prefix}/share
 %dir %{_libdir}
-%dir %{prefix_dir}
-%dir %{prefix_dir}/share
-%dir %{prefix_dir}/share/doc
 %dir %{prefix_bin}
 %dir %{prefix_inc}
 %dir %{prefix_lib}
@@ -88,6 +88,7 @@ make DESTDIR=%{buildroot} install-strip
 %doc docs/CONTRIBUTE docs/FAQ docs/FEATURES docs/HISTORY docs/INSTALL
 %doc docs/KNOWN_BUGS docs/MANUAL docs/RESOURCES docs/THANKS
 %doc docs/TODO docs/VERSIONS docs/TheArtOfHttpScripting tests
+%dir %{_defaultdocdir}
 
 %files -n %{pkg_name}-devel
 %defattr(-,root,root,-)
@@ -96,16 +97,14 @@ make DESTDIR=%{buildroot} install-strip
 %dir %{_prefix}
 %dir %{_libdir}
 %dir %{_includedir}
-%dir %{prefix_dir}
-%dir %{prefix_dir}/include
 %dir %{prefix_dir}/include/curl
 %dir %{prefix_bin}
 %dir %{prefix_inc}
 %dir %{prefix_lib}
-%dir %{_prefix}/include
 %{_libdir}/libcurl.a
 %{_libdir}/libcurl.la
 %doc docs/BINDINGS docs/INTERNALS docs/examples/*
+%dir %{_defaultdocdir}
 
 %changelog
 * Fri Feb 17 2017 Cory McIntire <cory@cpanel.net> - 7.38.0-1
