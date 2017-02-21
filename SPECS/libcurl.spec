@@ -79,6 +79,8 @@ make DESTDIR=%{buildroot} install-strip
 %dir %{_prefix}
 %dir %{_libdir}
 %dir %{prefix_dir}
+%dir %{prefix_dir}/share
+%dir %{prefix_dir}/share/doc
 %dir %{prefix_bin}
 %dir %{prefix_inc}
 %dir %{prefix_lib}
