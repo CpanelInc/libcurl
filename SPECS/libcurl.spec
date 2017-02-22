@@ -62,7 +62,7 @@ make
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 make DESTDIR=%{buildroot} install-strip
-mkdir -p %{buildroot}%{_defaultdocdir}
+install -m 755 -d %{buildroot}%{_defaultdocdir}
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
