@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.38.0
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -26,8 +26,13 @@ Provides: ea-libcurl
 Provides: valgrind, perl(getpart), perl(valgrind), perl(directories), perl(ftp)
 
 Requires: openssl
+Requires: c-ares
 BuildRequires: openssl-devel
 BuildRequires: valgrind
+BuildRequires: libidn libidn-devel
+BuildRequires: libssh2 libssh2-devel
+BuildRequires: openldap openldap-devel
+BuildRequires: c-ares c-ares-devel
 
 %description
 curl is a client to get documents/files from servers, using any of the
@@ -55,7 +60,15 @@ headers, and manual pages to develop applications using libcurl.
 cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.rpm; fi)
 LIBS="-ldl"
 %configure \
---with-ssl
+ --with-ssl \
+ --with-libssh2=/usr/local \
+ --with-gssapi \
+ --enable-tls-srp \
+ --enable-ldap \
+ --enable-ldaps \
+ --enable-ares \
+ --enable-unix-sockets \
+
 cd %{curlroot} && (if [ -f configure.in.rpm ]; then mv -f configure.in.rpm configure.in; fi)
 make
 
@@ -107,6 +120,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Tue Feb 28 2017 Cory McIntire <cory@cpanel.net> - 7.38.0-2
+- ZC-2452: Fix missing Available protocols and features
+
 * Fri Feb 17 2017 Cory McIntire <cory@cpanel.net> - 7.38.0-1
 - ZC-2421: Create libcurl package
 
