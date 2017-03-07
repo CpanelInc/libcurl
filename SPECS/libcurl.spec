@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.38.0
-%define release_prefix 3
+%define release_prefix 4
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -31,7 +31,6 @@ BuildRequires: valgrind
 BuildRequires: libidn libidn-devel
 BuildRequires: libssh2 libssh2-devel
 BuildRequires: openldap openldap-devel
-BuildRequires: c-ares c-ares-devel
 
 %description
 curl is a client to get documents/files from servers, using any of the
@@ -118,6 +117,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Tue Mar 07 2017 Cory McIntire <cory@cpanel.net> - 7.38.0-4
+- Removed leftover c-ares build requires
+
 * Thu Mar 02 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.38.0-3
 - Removed AsynchDNS feature as it isn't required at this time
 
