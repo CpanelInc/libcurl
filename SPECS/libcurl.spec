@@ -13,8 +13,8 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.38.0
-%define release_prefix 4
+Version: 7.53.1
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -94,8 +94,8 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{prefix_bin}
 %dir %{prefix_inc}
 %dir %{prefix_lib}
-%doc CHANGES COPYING README docs/BUGS docs/SSLCERTS
-%doc docs/CONTRIBUTE docs/FAQ docs/FEATURES docs/HISTORY docs/INSTALL
+%doc CHANGES COPYING README docs/BUGS
+%doc docs/FAQ docs/FEATURES docs/INSTALL
 %doc docs/KNOWN_BUGS docs/MANUAL docs/RESOURCES docs/THANKS
 %doc docs/TODO docs/VERSIONS docs/TheArtOfHttpScripting tests
 %dir %{_defaultdocdir}
@@ -113,10 +113,13 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{prefix_lib}
 %{_libdir}/libcurl.a
 %{_libdir}/libcurl.la
-%doc docs/BINDINGS docs/INTERNALS docs/examples/*
+%doc docs/examples/*
 %dir %{_defaultdocdir}
 
 %changelog
+* Mon Mar 13 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.53.1-1
+- Updated to 7.53.1
+
 * Tue Mar 07 2017 Cory McIntire <cory@cpanel.net> - 7.38.0-4
 - Removed leftover c-ares build requires
 
