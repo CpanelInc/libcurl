@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.53.1
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -22,8 +22,6 @@ Group: Applications/Internet
 Source: %{pkg_name}-%{version}.tar.gz
 URL: http://curl.haxx.se/
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
-Provides: ea-libcurl
-Provides: valgrind, perl(getpart), perl(valgrind), perl(directories), perl(ftp)
 
 Requires: openssl
 BuildRequires: openssl-devel
@@ -44,7 +42,6 @@ authentication, ftp upload, HTTP post, file transfer resume and more.
 Summary:    The includes, libs, and man pages to develop with libcurl
 Group:      Development/Libraries
 Requires:   openssl-devel
-Provides:   ea-libcurl-devel
 
 %description devel
 libcurl is the core engine of curl; this packages contains all the libs,
@@ -117,6 +114,10 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Mon Mar 20 2017 Eugene Zamriy <eugene@zamriy.info> - 7.53.1-2
+- Removed unnecessary ea-libcurl and ea-libcurl-devel Provides
+- Removed wrong valgrind and perl* Provides
+
 * Mon Mar 13 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.53.1-1
 - Updated to 7.53.1
 
