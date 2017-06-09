@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.53.1
-%define release_prefix 2
+%define release_prefix 3
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -36,6 +36,10 @@ BuildRequires: libidn libidn-devel
 BuildRequires: libssh2 libssh2-devel
 BuildRequires: openldap openldap-devel
 BuildRequires: krb5-devel
+BuildRequires: ea-libnghttp2-devel
+BuildRequires: ea-openssl-devel
+BuildRequires: ea-nghttp2
+
 
 %description
 curl is a client to get documents/files from servers, using any of the
@@ -69,6 +73,7 @@ LIBS="-ldl"
  --enable-ldap \
  --enable-ldaps \
  --enable-unix-sockets \
+ --with-nghttp2 \
 
 cd %{curlroot} && (if [ -f configure.in.rpm ]; then mv -f configure.in.rpm configure.in; fi)
 make
@@ -121,6 +126,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Fri Jun 09 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.53.1-3
+- Add HTTP2 support
+
 * Mon Apr 03 2017 Cory McIntire <cory@cpanel.net> - 7.53.1-2
 - Updated the package with changes suggested by @ezamriy (Eugene Zamriy)
 - https://github.com/CpanelInc/libcurl/pull/1
