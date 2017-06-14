@@ -30,6 +30,7 @@ Requires: openssl
 Requires: libssh2
 Requires: openldap
 Requires: krb5-libs
+Requires: ea-nghttp2
 BuildRequires: openssl-devel
 BuildRequires: valgrind
 BuildRequires: libidn libidn-devel
