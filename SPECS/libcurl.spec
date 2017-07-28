@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.53.1
-%define release_prefix 4
+%define release_prefix 5
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -65,7 +65,7 @@ headers, and manual pages to develop applications using libcurl.
 
 %build
 cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.rpm; fi)
-LIBS="-ldl"
+export LIBS="-ldl"
 %configure \
  --with-ssl=/opt/cpanel/ea-openssl \
  --with-libssh2=/usr/local \
@@ -127,6 +127,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Fri Jul 28 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.53.1-5
+- Fix export for static OpenSSL libraries
+
 * Thu Jul 27 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.53.1-4
 - Added ALPN support
 
