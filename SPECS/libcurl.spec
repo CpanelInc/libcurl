@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.53.1
-%define release_prefix 3
+%define release_prefix 5
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -31,7 +31,7 @@ Requires: libssh2
 Requires: openldap
 Requires: krb5-libs
 Requires: ea-nghttp2
-BuildRequires: openssl-devel
+BuildRequires: ea-openssl
 BuildRequires: valgrind
 BuildRequires: libidn libidn-devel
 BuildRequires: libssh2 libssh2-devel
@@ -53,7 +53,7 @@ authentication, ftp upload, HTTP post, file transfer resume and more.
 %package    devel
 Summary:    The includes, libs, and man pages to develop with libcurl
 Group:      Development/Libraries
-Requires:   openssl-devel
+BuildRequires:   ea-openssl-devel
 
 %description devel
 libcurl is the core engine of curl; this packages contains all the libs,
@@ -65,16 +65,16 @@ headers, and manual pages to develop applications using libcurl.
 
 %build
 cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.rpm; fi)
-LIBS="-ldl"
+export LIBS="-ldl"
 %configure \
- --with-ssl \
+ --with-ssl=/opt/cpanel/ea-openssl \
  --with-libssh2=/usr/local \
  --with-gssapi \
  --enable-tls-srp \
  --enable-ldap \
  --enable-ldaps \
  --enable-unix-sockets \
- --with-nghttp2 \
+ --with-nghttp2
 
 cd %{curlroot} && (if [ -f configure.in.rpm ]; then mv -f configure.in.rpm configure.in; fi)
 make
@@ -127,6 +127,12 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Fri Jul 28 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.53.1-5
+- Fix export for static OpenSSL libraries
+
+* Thu Jul 27 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.53.1-4
+- Added ALPN support
+
 * Fri Jun 09 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.53.1-3
 - Add HTTP2 support
 
