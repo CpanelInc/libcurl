@@ -13,13 +13,13 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.53.1
-%define release_prefix 5
+Version: 7.55.1
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
 Group: Applications/Internet
-Source: %{pkg_name}-%{version}.tar.gz
+Source: curl-%{version}.tar.gz
 URL: http://curl.haxx.se/
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 
@@ -61,7 +61,7 @@ headers, and manual pages to develop applications using libcurl.
 
 %prep
 
-%setup -q -n %{pkg_name}-%{version}
+%setup -q -n curl-%{version}
 
 %build
 cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.rpm; fi)
@@ -127,6 +127,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Mon Aug 14 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.55.1-1
+- Updated to cURL 7.55.1
+
 * Fri Jul 28 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.53.1-5
 - Fix export for static OpenSSL libraries
 
