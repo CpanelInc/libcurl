@@ -13,20 +13,20 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.53.1
-%define release_prefix 5
+Version: 7.55.1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
 Group: Applications/Internet
-Source: %{pkg_name}-%{version}.tar.gz
+Source: curl-%{version}.tar.gz
 URL: http://curl.haxx.se/
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 
 Autoreq: 0
 Autoprov: 0
 
-Requires: openssl
+Requires: ea-openssl
 Requires: libssh2
 Requires: openldap
 Requires: krb5-libs
@@ -61,13 +61,14 @@ headers, and manual pages to develop applications using libcurl.
 
 %prep
 
-%setup -q -n %{pkg_name}-%{version}
+%setup -q -n curl-%{version}
 
 %build
 cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.rpm; fi)
 export LIBS="-ldl"
 %configure \
  --with-ssl=/opt/cpanel/ea-openssl \
+ --with-ca-bundle=/etc/pki/tls/certs/ca-bundle.crt \
  --with-libssh2=/usr/local \
  --with-gssapi \
  --enable-tls-srp \
@@ -127,6 +128,12 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Tue Aug 15 2017 Cory McIntire <cory@cpanel.net> - 7.55.1-2
+- Bringing in ea-openssl as a Requires to fix EA-6671
+
+* Mon Aug 14 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.55.1-1
+- Updated to cURL 7.55.1
+
 * Fri Jul 28 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 7.53.1-5
 - Fix export for static OpenSSL libraries
 
