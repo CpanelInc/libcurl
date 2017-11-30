@@ -13,8 +13,8 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.55.1
-%define release_prefix 2
+Version: 7.57.0
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -128,6 +128,10 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Tue Nov 29 2017 Cory McIntire <cory@cpanel.net> - 7.57.0-1
+- EA-6989: Update cURL to 7.57.0 to deal with CVE
+- CVE-2017-8816, CVE-2017-8817, CVE-2017-8818
+
 * Tue Aug 15 2017 Cory McIntire <cory@cpanel.net> - 7.55.1-2
 - Bringing in ea-openssl as a Requires to fix EA-6671
 
