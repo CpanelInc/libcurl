@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.58.0
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -75,7 +75,8 @@ export LIBS="-ldl"
  --enable-ldap \
  --enable-ldaps \
  --enable-unix-sockets \
- --with-nghttp2
+ --with-nghttp2=/opt/cpanel/nghttp2/ \
+ LD_RUN_PATH=/opt/cpanel/nghttp2/lib
 
 cd %{curlroot} && (if [ -f configure.in.rpm ]; then mv -f configure.in.rpm configure.in; fi)
 make
@@ -128,6 +129,10 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Wed Feb 07 2018 Rishwanth Yeddula <rish@cpanel.net> - 7.58.0-2
+- EA-7219: Build curl against the ea-nghttp2 that is installed
+  in /opt/cpanel/nghttp2 to ensure that http2 can still be utilized.
+
 * Wed Jan 24 2018 Dan Muey <dan@cpanel.net> - 7.58.0-1
 - EA-7157: Update cURL to 7.58.0
 
