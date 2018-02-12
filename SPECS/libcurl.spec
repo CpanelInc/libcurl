@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.58.0
-%define release_prefix 2
+%define release_prefix 3
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -30,16 +30,16 @@ Requires: ea-openssl
 Requires: libssh2
 Requires: openldap
 Requires: krb5-libs
-Requires: ea-nghttp2
+Requires: ea-nghttp2 >= 1.20.0-7
 BuildRequires: ea-openssl
 BuildRequires: valgrind
 BuildRequires: libidn libidn-devel
 BuildRequires: libssh2 libssh2-devel
 BuildRequires: openldap openldap-devel
 BuildRequires: krb5-devel
-BuildRequires: ea-libnghttp2-devel
+BuildRequires: ea-libnghttp2-devel >= 1.20.0-7
 BuildRequires: ea-openssl-devel
-BuildRequires: ea-nghttp2
+BuildRequires: ea-nghttp2 >= 1.20.0-7
 
 
 %description
@@ -129,6 +129,10 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Thu Feb 08 2018 Rishwanth Yeddula <rish@cpanel.net> - 7.58.0-3
+- EA-7233: Require the newer version of ea-nghttp2 to ensure that
+  the packages are updated as a set.
+
 * Wed Feb 07 2018 Rishwanth Yeddula <rish@cpanel.net> - 7.58.0-2
 - EA-7219: Build curl against the ea-nghttp2 that is installed
   in /opt/cpanel/nghttp2 to ensure that http2 can still be utilized.
