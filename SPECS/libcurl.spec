@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.58.0
-%define release_prefix 3
+%define release_prefix 4
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -27,15 +27,11 @@ Autoreq: 0
 Autoprov: 0
 
 Requires: ea-openssl
-Requires: libssh2
-Requires: openldap
 Requires: krb5-libs
 Requires: ea-nghttp2 >= 1.20.0-7
 BuildRequires: ea-openssl
 BuildRequires: valgrind
 BuildRequires: libidn libidn-devel
-BuildRequires: libssh2 libssh2-devel
-BuildRequires: openldap openldap-devel
 BuildRequires: krb5-devel
 BuildRequires: ea-libnghttp2-devel >= 1.20.0-7
 BuildRequires: ea-openssl-devel
@@ -69,11 +65,9 @@ export LIBS="-ldl"
 %configure \
  --with-ssl=/opt/cpanel/ea-openssl \
  --with-ca-bundle=/etc/pki/tls/certs/ca-bundle.crt \
- --with-libssh2=/usr/local \
  --with-gssapi \
+ --without-nss \
  --enable-tls-srp \
- --enable-ldap \
- --enable-ldaps \
  --enable-unix-sockets \
  --with-nghttp2=/opt/cpanel/nghttp2/ \
  LD_RUN_PATH=/opt/cpanel/nghttp2/lib
@@ -129,6 +123,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Wed Mar 07 2018 Cory McIntire <cory@cpanel> - 7.58.0-4
+- ZC-3479: Ensure we only link only against our ea-openssl
+
 * Thu Feb 08 2018 Rishwanth Yeddula <rish@cpanel.net> - 7.58.0-3
 - EA-7233: Require the newer version of ea-nghttp2 to ensure that
   the packages are updated as a set.
