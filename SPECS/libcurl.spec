@@ -67,7 +67,6 @@ headers, and manual pages to develop applications using libcurl.
 
 %build
 cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.rpm; fi)
-autoconf
 
 export LIBS="-ldl"
 %configure \
