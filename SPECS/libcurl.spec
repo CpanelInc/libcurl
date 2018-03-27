@@ -26,9 +26,6 @@ URL: http://curl.haxx.se/
 Patch1: 0001-Update-configure-to-allow-additional-LDFLAG-control.patch
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 
-Autoreq: 0
-Autoprov: 0
-
 Requires: ea-openssl >= %{ea_openssl_ver}
 Requires: krb5-libs
 Requires: ea-nghttp2 >= %{ea_nghttp2_ver}
@@ -42,7 +39,6 @@ BuildRequires: ea-libnghttp2 >= %{ea_nghttp2_ver}
 BuildRequires: ea-libnghttp2-devel >= %{ea_nghttp2_ver}
 BuildRequires: ea-brotli, ea-brotli-devel
 
-
 %description
 curl is a client to get documents/files from servers, using any of the
 supported protocols. The command is designed to work without user
@@ -54,7 +50,6 @@ authentication, ftp upload, HTTP post, file transfer resume and more.
 %package    devel
 Summary:    The includes, libs, and man pages to develop with libcurl
 Group:      Development/Libraries
-BuildRequires:   ea-openssl-devel >= %{ea_openssl_ver}
 
 %description devel
 libcurl is the core engine of curl; this packages contains all the libs,
@@ -85,6 +80,9 @@ export LIBS="-ldl"
 cd %{curlroot} && (if [ -f configure.in.rpm ]; then mv -f configure.in.rpm configure.in; fi)
 make
 
+# We dont run tests, so just get rid of the directory for now.
+rm -rf tests
+
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 make DESTDIR=%{buildroot} install-strip
@@ -93,12 +91,6 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 [ "%{curlroot}" != "/" ] && rm -rf %{curlroot}
-
-%post
-/sbin/ldconfig
-
-%postun
-/sbin/ldconfig
 
 %files -n %{pkg_name}
 %defattr(-,root,root,-)
@@ -113,7 +105,7 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %doc CHANGES COPYING README docs/BUGS
 %doc docs/FAQ docs/FEATURES docs/INSTALL
 %doc docs/KNOWN_BUGS docs/MANUAL docs/RESOURCES docs/THANKS
-%doc docs/TODO docs/VERSIONS docs/TheArtOfHttpScripting tests
+%doc docs/TODO docs/VERSIONS docs/TheArtOfHttpScripting
 %dir %{_defaultdocdir}
 
 %files -n %{pkg_name}-devel
