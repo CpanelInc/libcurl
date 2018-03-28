@@ -8,35 +8,36 @@
 %define prefix_inc %{prefix_dir}/include
 %define _unpackaged_files_terminate_build 0
 %define _defaultdocdir %{_prefix}/share/doc
+%define ea_openssl_ver 1.0.2n-3
+%define ea_nghttp2_ver 1.20.0-7
 
 %define debug_package %{nil}
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.58.0
-%define release_prefix 4
+%define release_prefix 5
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
 Group: Applications/Internet
 Source: curl-%{version}.tar.gz
 URL: http://curl.haxx.se/
+Patch1: 0001-Update-configure-to-allow-additional-LDFLAG-control.patch
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 
-Autoreq: 0
-Autoprov: 0
-
-Requires: ea-openssl
+Requires: ea-openssl >= %{ea_openssl_ver}
 Requires: krb5-libs
-Requires: ea-nghttp2 >= 1.20.0-7
-BuildRequires: ea-openssl
+Requires: ea-nghttp2 >= %{ea_nghttp2_ver}
+Requires: ea-brotli
 BuildRequires: valgrind
 BuildRequires: libidn libidn-devel
 BuildRequires: krb5-devel
-BuildRequires: ea-libnghttp2-devel >= 1.20.0-7
-BuildRequires: ea-openssl-devel
-BuildRequires: ea-nghttp2 >= 1.20.0-7
-
+BuildRequires: ea-openssl >= %{ea_openssl_ver}
+BuildRequires: ea-openssl-devel >= %{ea_openssl_ver}
+BuildRequires: ea-libnghttp2 >= %{ea_nghttp2_ver}
+BuildRequires: ea-libnghttp2-devel >= %{ea_nghttp2_ver}
+BuildRequires: ea-brotli, ea-brotli-devel
 
 %description
 curl is a client to get documents/files from servers, using any of the
@@ -49,7 +50,6 @@ authentication, ftp upload, HTTP post, file transfer resume and more.
 %package    devel
 Summary:    The includes, libs, and man pages to develop with libcurl
 Group:      Development/Libraries
-BuildRequires:   ea-openssl-devel
 
 %description devel
 libcurl is the core engine of curl; this packages contains all the libs,
@@ -58,9 +58,11 @@ headers, and manual pages to develop applications using libcurl.
 %prep
 
 %setup -q -n curl-%{version}
+%patch1 -p1 -b .sslldflags
 
 %build
 cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.rpm; fi)
+
 export LIBS="-ldl"
 %configure \
  --with-ssl=/opt/cpanel/ea-openssl \
@@ -70,10 +72,16 @@ export LIBS="-ldl"
  --enable-tls-srp \
  --enable-unix-sockets \
  --with-nghttp2=/opt/cpanel/nghttp2/ \
- LD_RUN_PATH=/opt/cpanel/nghttp2/lib
+ --with-brotli=/opt/cpanel/ea-brotli/ \
+ SSL_LDFLAGS="-L/opt/cpanel/ea-openssl/%{_lib} -Wl,-rpath=/opt/cpanel/ea-openssl/%{_lib} " \
+ LD_H2="-L/opt/cpanel/nghttp2/lib -Wl,-rpath=/opt/cpanel/nghttp2/lib " \
+ LD_BROTLI="-L/opt/cpanel/ea-brotli/lib -Wl,-rpath=/opt/cpanel/ea-brotli/lib "
 
 cd %{curlroot} && (if [ -f configure.in.rpm ]; then mv -f configure.in.rpm configure.in; fi)
 make
+
+# We dont run tests, so just get rid of the directory for now.
+rm -rf tests
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -83,12 +91,6 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 [ "%{curlroot}" != "/" ] && rm -rf %{curlroot}
-
-%post
-/sbin/ldconfig
-
-%postun
-/sbin/ldconfig
 
 %files -n %{pkg_name}
 %defattr(-,root,root,-)
@@ -103,7 +105,7 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %doc CHANGES COPYING README docs/BUGS
 %doc docs/FAQ docs/FEATURES docs/INSTALL
 %doc docs/KNOWN_BUGS docs/MANUAL docs/RESOURCES docs/THANKS
-%doc docs/TODO docs/VERSIONS docs/TheArtOfHttpScripting tests
+%doc docs/TODO docs/VERSIONS docs/TheArtOfHttpScripting
 %dir %{_defaultdocdir}
 
 %files -n %{pkg_name}-devel
@@ -123,7 +125,13 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
-* Wed Mar 07 2018 Cory McIntire <cory@cpanel> - 7.58.0-4
+* Mon Mar 26 2018 Rishwanth Yeddula <rish@cpanel.net> - 7.58.0-5
+- ZC-3552: Ensure curl is linked again ea-openssl, and ea-nghttp2
+  Additionally, added support for brotli.
+  Added versioning to ea-openssl and nghttp2 requirements for easier
+  maintenance.
+
+* Wed Mar 07 2018 Cory McIntire <cory@cpanel.net> - 7.58.0-4
 - ZC-3479: Ensure we only link only against our ea-openssl
 
 * Thu Feb 08 2018 Rishwanth Yeddula <rish@cpanel.net> - 7.58.0-3
