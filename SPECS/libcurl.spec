@@ -15,8 +15,8 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.58.0
-%define release_prefix 5
+Version: 7.59.0
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -125,6 +125,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Sun Apr 01 2018 Cory McIntire <cory@cpanel.net> - 7.59.0-1
+- EA-7336: Update cURL from 7.58.0 to 7.59.0
+
 * Mon Mar 26 2018 Rishwanth Yeddula <rish@cpanel.net> - 7.58.0-5
 - ZC-3552: Ensure curl is linked again ea-openssl, and ea-nghttp2
   Additionally, added support for brotli.
