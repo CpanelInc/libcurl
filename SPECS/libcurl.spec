@@ -8,7 +8,7 @@
 %define prefix_inc %{prefix_dir}/include
 %define _unpackaged_files_terminate_build 0
 %define _defaultdocdir %{_prefix}/share/doc
-%define ea_openssl_ver 1.0.2n-3
+%define ea_openssl_ver 1.0.2o-2
 %define ea_nghttp2_ver 1.20.0-7
 
 %define debug_package %{nil}
@@ -16,7 +16,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.59.0
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -26,12 +26,14 @@ URL: http://curl.haxx.se/
 Patch1: 0001-Update-configure-to-allow-additional-LDFLAG-control.patch
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 
+Requires: libssh2
 Requires: ea-openssl >= %{ea_openssl_ver}
 Requires: krb5-libs
 Requires: ea-nghttp2 >= %{ea_nghttp2_ver}
 Requires: ea-brotli
 BuildRequires: valgrind
 BuildRequires: libidn libidn-devel
+BuildRequires: libssh2 libssh2-devel
 BuildRequires: krb5-devel
 BuildRequires: ea-openssl >= %{ea_openssl_ver}
 BuildRequires: ea-openssl-devel >= %{ea_openssl_ver}
@@ -67,6 +69,7 @@ export LIBS="-ldl"
 %configure \
  --with-ssl=/opt/cpanel/ea-openssl \
  --with-ca-bundle=/etc/pki/tls/certs/ca-bundle.crt \
+ --with-libssh2=/usr/local \
  --with-gssapi \
  --without-nss \
  --enable-tls-srp \
@@ -125,6 +128,10 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Mon Apr 16 2018 Rishwanth Yeddula <rish@cpanel.net> - 7.59.0-2
+- EA-7382: Update dependency on ea-openssl to require the latest version with versioned symbols.
+- ZC-3626: Re-enable SFTP support via libssh2.
+
 * Sun Apr 01 2018 Cory McIntire <cory@cpanel.net> - 7.59.0-1
 - EA-7336: Update cURL from 7.58.0 to 7.59.0
 
