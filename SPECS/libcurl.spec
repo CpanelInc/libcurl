@@ -15,8 +15,8 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.59.0
-%define release_prefix 2
+Version: 7.60.0
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -128,6 +128,10 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Wed May 16 2018 Cory McIntire <cory@cpanel.net> - 7.60.0-1
+- ZC-3769: Update cURL from 7.59.0 to 7.60.0
+- CVE-2018-1000300 https://curl.haxx.se/docs/adv_2018-82c2.html
+
 * Mon Apr 16 2018 Rishwanth Yeddula <rish@cpanel.net> - 7.59.0-2
 - EA-7382: Update dependency on ea-openssl to require the latest version with versioned symbols.
 - ZC-3626: Re-enable SFTP support via libssh2.
