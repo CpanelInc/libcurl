@@ -1,0 +1,86 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Rishwanth Yeddula <rish@cpanel.net>
+Date: Thu, 12 Jul 2018 13:52:17 -0500
+Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
+ SSL
+
+---
+ configure.ac  | 22 +++++++++++++++-------
+ m4/libtool.m4 |  9 +++++++++
+ 2 files changed, 24 insertions(+), 7 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 22280a5..fd67c86 100755
+--- a/configure.ac
++++ b/configure.ac
+@@ -1028,7 +1028,9 @@ if test X"$OPT_BROTLI" != Xno; then
+   dnl if given with a prefix, we set -L and -I based on that
+   if test -n "$PREFIX_BROTLI"; then
+     LIB_BROTLI="-lbrotlidec"
+-    LD_BROTLI=-L${PREFIX_BROTLI}/lib$libsuff
++    if test -z $LD_BROTLI; then
++        LD_BROTLI=-L${PREFIX_BROTLI}/lib$libsuff
++    fi
+     CPP_BROTLI=-I${PREFIX_BROTLI}/include
+     DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
+   fi
+@@ -1603,8 +1605,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
+     dnl via --with-ssl
+     LIB_OPENSSL="$PREFIX_OPENSSL/lib$libsuff"
+     if test "$PREFIX_OPENSSL" != "/usr" ; then
+-      SSL_LDFLAGS="-L$LIB_OPENSSL"
+-      SSL_CPPFLAGS="-I$PREFIX_OPENSSL/include"
++      if test -z $SSL_LDFLAGS; then
++          SSL_LDFLAGS="-L$LIB_OPENSSL"
++          SSL_CPPFLAGS="-I$PREFIX_OPENSSL/include"
++      fi
+     fi
+     SSL_CPPFLAGS="$SSL_CPPFLAGS -I$PREFIX_OPENSSL/include/openssl"
+     ;;
+@@ -1618,8 +1622,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
+       SSL_LIBS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
+         $PKGCONFIG --libs-only-l openssl 2>/dev/null`
+ 
+-      SSL_LDFLAGS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
++      if test -z $SSL_LDFLAGS; then
++        SSL_LDFLAGS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
+         $PKGCONFIG --libs-only-L openssl 2>/dev/null`
++      fi
+ 
+       SSL_CPPFLAGS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
+         $PKGCONFIG --cflags-only-I openssl 2>/dev/null`
+@@ -3290,9 +3296,11 @@ if test X"$want_h2" != Xno; then
+       $PKGCONFIG --cflags-only-I libnghttp2`
+     AC_MSG_NOTICE([-I is $CPP_H2])
+ 
+-    LD_H2=`CURL_EXPORT_PCDIR([$want_h2_path])
+-      $PKGCONFIG --libs-only-L libnghttp2`
+-    AC_MSG_NOTICE([-L is $LD_H2])
++    if test -z $LD_H2; then
++        LD_H2=`CURL_EXPORT_PCDIR([$want_h2_path])
++          $PKGCONFIG --libs-only-L libnghttp2`
++        AC_MSG_NOTICE([-L is $LD_H2])
++    fi
+ 
+     LDFLAGS="$LDFLAGS $LD_H2"
+     CPPFLAGS="$CPPFLAGS $CPP_H2"
+diff --git a/m4/libtool.m4 b/m4/libtool.m4
+index 94b2e7a..61745ef 100644
+--- a/m4/libtool.m4
++++ b/m4/libtool.m4
+@@ -2378,6 +2378,15 @@ hardcode_into_libs=no
+ # flags to be left without arguments
+ need_version=unknown
+ 
++AC_ARG_VAR([SSL_LDFLAGS],
++[User-defined LDFLAGS for SSL.])
++
++AC_ARG_VAR([LD_H2],
++[User-defined LDFLAGS for nghttp2.])
++
++AC_ARG_VAR([LD_BROTLI],
++[User-defined LDFLAGS for brotli.])
++
+ AC_ARG_VAR([LT_SYS_LIBRARY_PATH],
+ [User-defined run-time library search path.])
+ 

@@ -15,7 +15,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.60.0
+Version: 7.61.0
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -23,8 +23,26 @@ Vendor: cPanel, Inc.
 Group: Applications/Internet
 Source: curl-%{version}.tar.gz
 URL: http://curl.haxx.se/
-Patch1: 0001-Update-configure-to-allow-additional-LDFLAG-control.patch
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
+
+# ***NOTE*** This patch is 'built with' the 0001 patch.
+# The 0001 (configure.ac) patch in SOURCES is not used directly during the RPM build process,
+# it is used for building the 0002 patch itself whenever a newer version of curl is released.
+# General process here is:
+#
+# 1. Download/extract latest version of curl, and initial a git repo there as so:
+#   1a. git init .
+#   1b. git add .
+#   1c. git commit -m "init"
+# 2. Create a patches branch, and apply the 0001 patch to the extracted content as so:
+#   2a. git checkout -b "patches"
+#   2b. git am </path/to/0001patch>
+# 3. Run "autoconf" to update the configure file, and then commit the updated file to the patches branch:
+#   3a. git add configure
+#   3b. git commit
+# 4. Build the final patch files with:
+#   4a. git format-patch --zero-commit --no-signature master..patches
+Patch1: 0002-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
 
 Requires: libssh2
 Requires: ea-openssl >= %{ea_openssl_ver}
@@ -128,6 +146,10 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Thu Jul 12 2018 Rishwanth Yeddula <rish@cpanel.net> - 7.61.0-1
+- EA-7654: Update cURL from 7.60.0 to 7.61.0
+- CVE-2018-0500 https://curl.haxx.se/docs/adv_2018-70a2.html
+
 * Wed May 16 2018 Cory McIntire <cory@cpanel.net> - 7.60.0-1
 - ZC-3769: Update cURL from 7.59.0 to 7.60.0
 - CVE-2018-1000300 https://curl.haxx.se/docs/adv_2018-82c2.html
