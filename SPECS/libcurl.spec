@@ -15,7 +15,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.61.1
+Version: 7.62.0
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -146,6 +146,12 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Thu Nov 01 2018 Cory McIntire <cory@cpanel.net> - 7.62.0-1
+- EA-7978: Update cURL from 7.61.1 to 7.62.0 for CVEs
+  https://curl.haxx.se/docs/CVE-2018-16839.html
+  https://curl.haxx.se/docs/CVE-2018-16840.html
+  https://curl.haxx.se/docs/CVE-2018-16842.html
+
 * Mon Oct 01 2018 Cory McIntire <cory@cpanel.net> - 7.61.1-1
 - EA-7819: Update cURL from 7.61.0 to 7.61.1
 - CVE-2018-14618 https://curl.haxx.se/docs/CVE-2018-14618.html
@@ -186,7 +192,7 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 * Wed Jan 24 2018 Dan Muey <dan@cpanel.net> - 7.58.0-1
 - EA-7157: Update cURL to 7.58.0
 
-* Tue Nov 29 2017 Cory McIntire <cory@cpanel.net> - 7.57.0-1
+* Wed Nov 29 2017 Cory McIntire <cory@cpanel.net> - 7.57.0-1
 - EA-6989: Update cURL to 7.57.0 to deal with CVE
 - CVE-2017-8816, CVE-2017-8817, CVE-2017-8818
 
