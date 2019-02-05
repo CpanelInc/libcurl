@@ -15,8 +15,8 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.62.0
-%define release_prefix 2
+Version: 7.63.0
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -147,6 +147,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Tue Jan 29 2019 Tim Mullin <tim@cpanel.net> - 7.63.0-1
+- EA-8187: Update cURL from 7.62.0 to 7.63.0
+
 * Tue Nov 06 2018 Tim Mullin <tim@cpanel.net> - 7.62.0-2
 - EA-7983: Added libssh2-devel as a dependency
 
