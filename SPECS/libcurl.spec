@@ -15,7 +15,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.63.0
+Version: 7.64.0
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -147,6 +147,12 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Thu Feb 07 2019 Cory McIntire <cory@cpanel.net> - 7.64.0-1
+- EA-8204: Update cURL from 7.63.0 to 7.64.0
+  https://curl.haxx.se/docs/CVE-2018-16890.html
+  https://curl.haxx.se/docs/CVE-2019-3822.html
+  https://curl.haxx.se/docs/CVE-2019-3823.html
+
 * Tue Jan 29 2019 Tim Mullin <tim@cpanel.net> - 7.63.0-1
 - EA-8187: Update cURL from 7.62.0 to 7.63.0
 
