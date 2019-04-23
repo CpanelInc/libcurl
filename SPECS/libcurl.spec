@@ -16,7 +16,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.64.0
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -45,7 +45,6 @@ BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 Patch1: 0002-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
 
 Requires: libssh2
-Requires: libssh2-devel
 Requires: ea-openssl >= %{ea_openssl_ver}
 Requires: krb5-libs
 Requires: ea-nghttp2 >= %{ea_nghttp2_ver}
@@ -147,6 +146,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Wed Apr 03 2019 Tim Mullin <tim@cpanel.net> - 7.64.0-2
+EA-8303: Removed libssh2-devel as a dependency; this caused problems for RHEL
+
 * Thu Feb 07 2019 Cory McIntire <cory@cpanel.net> - 7.64.0-1
 - EA-8204: Update cURL from 7.63.0 to 7.64.0
   https://curl.haxx.se/docs/CVE-2018-16890.html
