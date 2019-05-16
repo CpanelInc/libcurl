@@ -1,4 +1,4 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From 0494aeac2c5f6ad0cd6c59cd0d550e5542e00d78 Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 12 Jul 2018 13:52:17 -0500
 Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
@@ -10,10 +10,10 @@ Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
  2 files changed, 24 insertions(+), 7 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index e9f0ef7..82a57b8 100755
+index 6d5ec2c..698b892 100755
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1032,7 +1032,9 @@ if test X"$OPT_BROTLI" != Xno; then
+@@ -1055,7 +1055,9 @@ if test X"$OPT_BROTLI" != Xno; then
    dnl if given with a prefix, we set -L and -I based on that
    if test -n "$PREFIX_BROTLI"; then
      LIB_BROTLI="-lbrotlidec"
@@ -24,7 +24,7 @@ index e9f0ef7..82a57b8 100755
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -1612,8 +1614,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
+@@ -1669,8 +1671,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
      dnl via --with-ssl
      LIB_OPENSSL="$PREFIX_OPENSSL/lib$libsuff"
      if test "$PREFIX_OPENSSL" != "/usr" ; then
@@ -37,7 +37,7 @@ index e9f0ef7..82a57b8 100755
      fi
      SSL_CPPFLAGS="$SSL_CPPFLAGS -I$PREFIX_OPENSSL/include/openssl"
      ;;
-@@ -1627,8 +1631,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
+@@ -1684,8 +1688,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
        SSL_LIBS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --libs-only-l --libs-only-other openssl 2>/dev/null`
  
@@ -49,7 +49,7 @@ index e9f0ef7..82a57b8 100755
  
        SSL_CPPFLAGS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --cflags-only-I openssl 2>/dev/null`
-@@ -3347,9 +3353,11 @@ if test X"$want_h2" != Xno; then
+@@ -3403,9 +3409,11 @@ if test X"$want_h2" != Xno; then
        $PKGCONFIG --cflags-only-I libnghttp2`
      AC_MSG_NOTICE([-I is $CPP_H2])
  
@@ -65,7 +65,7 @@ index e9f0ef7..82a57b8 100755
      LDFLAGS="$LDFLAGS $LD_H2"
      CPPFLAGS="$CPPFLAGS $CPP_H2"
 diff --git a/m4/libtool.m4 b/m4/libtool.m4
-index 0130746..82ca4f8 100644
+index 90924a6..822bd48 100644
 --- a/m4/libtool.m4
 +++ b/m4/libtool.m4
 @@ -2378,6 +2378,15 @@ hardcode_into_libs=no
@@ -84,3 +84,6 @@ index 0130746..82ca4f8 100644
  AC_ARG_VAR([LT_SYS_LIBRARY_PATH],
  [User-defined run-time library search path.])
  
+-- 
+2.21.0
+
