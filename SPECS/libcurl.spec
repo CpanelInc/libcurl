@@ -15,8 +15,8 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.64.0
-%define release_prefix 2
+Version: 7.64.1
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -146,6 +146,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Thu May 16 2019 Cory McIntire <cory@cpanel.net> - 7.64.1-1
+- EA-8472: Update libcurl from v7.64.0 to v7.64.1
+
 * Wed Apr 03 2019 Tim Mullin <tim@cpanel.net> - 7.64.0-2
 EA-8303: Removed libssh2-devel as a dependency; this caused problems for RHEL
 
