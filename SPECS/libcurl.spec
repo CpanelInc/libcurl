@@ -125,7 +125,7 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{prefix_lib}
 %doc CHANGES COPYING README docs/BUGS
 %doc docs/FAQ docs/FEATURES docs/INSTALL
-%doc docs/KNOWN_BUGS docs/MANUAL docs/RESOURCES docs/THANKS
+%doc docs/KNOWN_BUGS docs/RESOURCES docs/THANKS
 %doc docs/TODO docs/VERSIONS docs/TheArtOfHttpScripting
 %dir %{_defaultdocdir}
 
