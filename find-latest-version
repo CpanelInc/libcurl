@@ -1,0 +1,48 @@
+#!/usr/local/cpanel/3rdparty/bin/perl
+# cpanel - find-latest-version                  Copyright(c) 2019 cPanel, L.L.C.
+#                                                           All rights Reserved.
+# copyright@cpanel.net                                         http://cpanel.net
+# This code is subject to the cPanel license. Unauthorized copying is prohibited
+#
+# This provides incremental updates to existing packages in EasyApache4.
+package libcurl::find_latest_version;
+
+use strict;
+use warnings;
+
+use lib "../ea-tools/lib/ea4_tool";    # assumes ea-tools is checked out next to this repo
+use ea4_tool::util ();
+
+unless ( caller() ) {
+    ea4_tool::util::find_latest_version( \&_get_required, \&_add_sum );
+}
+
+###############
+#### helpers ##
+###############
+
+sub _get_required {
+    my ($http) = @_;
+
+    my $res = $http->get("https://curl.haxx.se/download.html");
+    if ( !$res->{success} ) {
+        die "Could not GET libcurl dist page ($res->{status} $res->{reason})\n";
+    }
+    my @libcurl = sort { $b <=> $a } ( $res->{content} =~ m{href="/download/curl-7\.([0-9]+\.[0-9]+)\.tar\.gz"}g );
+    if ( !@libcurl ) {
+        die "Could not find libcurl versions\n";
+    }
+
+    my $version = "7\.$libcurl[0]";
+    my $name    = "curl-$version.tar.gz";
+    my $url     = "https://curl.haxx.se/download/$name";
+
+    return ( $version, $url, $name );
+}
+
+
+sub _add_sum {
+    my ( $http, $hr ) = @_;
+
+    return;
+}
