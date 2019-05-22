@@ -1,4 +1,4 @@
-From 7cb92abb1dcba02f101f08107d77bfd4c4866790 Mon Sep 17 00:00:00 2001
+From bc0f6a2d489605b2b76aaf99bd83517c08c8b579 Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 12 Jul 2018 13:53:29 -0500
 Subject: [PATCH 2/2] Rebuild configure with the additional LDFLAG for Brotli,
@@ -9,7 +9,7 @@ Subject: [PATCH 2/2] Rebuild configure with the additional LDFLAG for Brotli,
  1 file changed, 36 insertions(+), 25 deletions(-)
 
 diff --git a/configure b/configure
-index 7f5ae9f..11c2524 100755
+index dee2904..a095b8c 100755
 --- a/configure
 +++ b/configure
 @@ -982,6 +982,9 @@ CURL_LT_SHLIB_USE_NO_UNDEFINED_TRUE
@@ -189,7 +189,7 @@ index 7f5ae9f..11c2524 100755
  
        SSL_CPPFLAGS=`
      if test -n "$OPENSSL_PCDIR"; then
-@@ -27722,15 +27731,17 @@ $as_echo "$as_me: -l is $LIB_H2" >&6;}
+@@ -27732,15 +27741,17 @@ $as_echo "$as_me: -l is $LIB_H2" >&6;}
      { $as_echo "$as_me:${as_lineno-$LINENO}: -I is $CPP_H2" >&5
  $as_echo "$as_me: -I is $CPP_H2" >&6;}
  
