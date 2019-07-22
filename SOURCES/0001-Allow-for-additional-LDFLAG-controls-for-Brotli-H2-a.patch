@@ -1,4 +1,4 @@
-From baae9902f70905cf66e9dad2a981160c9563bbb1 Mon Sep 17 00:00:00 2001
+From 96cd67f94776795a0586b0fb18695224eb7537a9 Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 12 Jul 2018 13:52:17 -0500
 Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
@@ -10,7 +10,7 @@ Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
  2 files changed, 24 insertions(+), 7 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 4cd2cb8..f86eea6 100755
+index cbf0380..e28153c 100755
 --- a/configure.ac
 +++ b/configure.ac
 @@ -1055,7 +1055,9 @@ if test X"$OPT_BROTLI" != Xno; then
@@ -49,7 +49,7 @@ index 4cd2cb8..f86eea6 100755
  
        SSL_CPPFLAGS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --cflags-only-I openssl 2>/dev/null`
-@@ -3317,9 +3323,11 @@ if test X"$want_h2" != Xno; then
+@@ -3301,9 +3307,11 @@ if test X"$want_h2" != Xno; then
        $PKGCONFIG --cflags-only-I libnghttp2`
      AC_MSG_NOTICE([-I is $CPP_H2])
  
