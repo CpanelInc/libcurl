@@ -1,4 +1,4 @@
-From fdaba952e5dc0aeff002152288e6540e2859423a Mon Sep 17 00:00:00 2001
+From cda33f0d316a57638fabcf6224c768898fd5d7b1 Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 12 Jul 2018 13:53:29 -0500
 Subject: [PATCH 2/2] Rebuild configure with the additional LDFLAG for Brotli,
@@ -9,7 +9,7 @@ Subject: [PATCH 2/2] Rebuild configure with the additional LDFLAG for Brotli,
  1 file changed, 36 insertions(+), 25 deletions(-)
 
 diff --git a/configure b/configure
-index 5eea112..c666c7c 100755
+index 28092b4..d19e2b8 100755
 --- a/configure
 +++ b/configure
 @@ -981,6 +981,9 @@ CURL_LT_SHLIB_USE_NO_UNDEFINED_TRUE
@@ -30,7 +30,7 @@ index 5eea112..c666c7c 100755
  localstatedir
  sharedstatedir
  sysconfdir
-@@ -1210,6 +1212,9 @@ LDFLAGS
+@@ -1217,6 +1219,9 @@ LDFLAGS
  LIBS
  CPPFLAGS
  CPP
@@ -40,7 +40,7 @@ index 5eea112..c666c7c 100755
  LT_SYS_LIBRARY_PATH'
  ac_subdirs_all='ares'
  
-@@ -1249,7 +1254,6 @@ datadir='${datarootdir}'
+@@ -1256,7 +1261,6 @@ datadir='${datarootdir}'
  sysconfdir='${prefix}/etc'
  sharedstatedir='${prefix}/com'
  localstatedir='${prefix}/var'
@@ -48,7 +48,7 @@ index 5eea112..c666c7c 100755
  includedir='${prefix}/include'
  oldincludedir='/usr/include'
  docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
-@@ -1502,15 +1506,6 @@ do
+@@ -1509,15 +1513,6 @@ do
    | -silent | --silent | --silen | --sile | --sil)
      silent=yes ;;
  
@@ -64,7 +64,7 @@ index 5eea112..c666c7c 100755
    -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
      ac_prev=sbindir ;;
    -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
-@@ -1648,7 +1643,7 @@ fi
+@@ -1655,7 +1650,7 @@ fi
  for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
  		datadir sysconfdir sharedstatedir localstatedir includedir \
  		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
@@ -73,7 +73,7 @@ index 5eea112..c666c7c 100755
  do
    eval ac_val=\$$ac_var
    # Remove trailing slashes.
-@@ -1801,7 +1796,6 @@ Fine tuning of the installation directories:
+@@ -1808,7 +1803,6 @@ Fine tuning of the installation directories:
    --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
    --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
    --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
@@ -81,7 +81,7 @@ index 5eea112..c666c7c 100755
    --libdir=DIR            object code libraries [EPREFIX/lib]
    --includedir=DIR        C header files [PREFIX/include]
    --oldincludedir=DIR     C header files for non-gcc [/usr/include]
-@@ -2063,6 +2057,9 @@ Some influential environment variables:
+@@ -2085,6 +2079,9 @@ Some influential environment variables:
    CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
                you have headers in a nonstandard directory <include dir>
    CPP         C preprocessor
@@ -91,7 +91,7 @@ index 5eea112..c666c7c 100755
    LT_SYS_LIBRARY_PATH
                User-defined run-time library search path.
  
-@@ -7066,7 +7063,7 @@ else
+@@ -7086,7 +7083,7 @@ else
      We can't simply define LARGE_OFF_T to be 9223372036854775807,
      since some C++ compilers masquerading as C compilers
      incorrectly reject 9223372036854775807.  */
@@ -100,7 +100,7 @@ index 5eea112..c666c7c 100755
    int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
  		       && LARGE_OFF_T % 2147483647 == 1)
  		      ? 1 : -1];
-@@ -7111,7 +7108,7 @@ else
+@@ -7131,7 +7128,7 @@ else
      We can't simply define LARGE_OFF_T to be 9223372036854775807,
      since some C++ compilers masquerading as C compilers
      incorrectly reject 9223372036854775807.  */
@@ -109,7 +109,7 @@ index 5eea112..c666c7c 100755
    int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
  		       && LARGE_OFF_T % 2147483647 == 1)
  		      ? 1 : -1];
-@@ -7134,7 +7131,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+@@ -7154,7 +7151,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
      We can't simply define LARGE_OFF_T to be 9223372036854775807,
      since some C++ compilers masquerading as C compilers
      incorrectly reject 9223372036854775807.  */
@@ -118,7 +118,7 @@ index 5eea112..c666c7c 100755
    int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
  		       && LARGE_OFF_T % 2147483647 == 1)
  		      ? 1 : -1];
-@@ -7178,7 +7175,7 @@ else
+@@ -7198,7 +7195,7 @@ else
      We can't simply define LARGE_OFF_T to be 9223372036854775807,
      since some C++ compilers masquerading as C compilers
      incorrectly reject 9223372036854775807.  */
@@ -127,7 +127,7 @@ index 5eea112..c666c7c 100755
    int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
  		       && LARGE_OFF_T % 2147483647 == 1)
  		      ? 1 : -1];
-@@ -7201,7 +7198,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+@@ -7221,7 +7218,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
      We can't simply define LARGE_OFF_T to be 9223372036854775807,
      since some C++ compilers masquerading as C compilers
      incorrectly reject 9223372036854775807.  */
@@ -136,7 +136,7 @@ index 5eea112..c666c7c 100755
    int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
  		       && LARGE_OFF_T % 2147483647 == 1)
  		      ? 1 : -1];
-@@ -13835,6 +13832,12 @@ need_version=unknown
+@@ -13855,6 +13852,12 @@ need_version=unknown
  
  
  
@@ -149,7 +149,7 @@ index 5eea112..c666c7c 100755
  case $host_os in
  aix3*)
    version_type=linux # correct to gnu/linux during the next big refactor
-@@ -21002,7 +21005,9 @@ $as_echo "found" >&6; }
+@@ -21022,7 +21025,9 @@ $as_echo "found" >&6; }
  
      if test -n "$PREFIX_BROTLI"; then
      LIB_BROTLI="-lbrotlidec"
@@ -160,7 +160,7 @@ index 5eea112..c666c7c 100755
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -22355,8 +22360,10 @@ $as_echo "$as_me: PKG_CONFIG_LIBDIR will be set to \"$OPENSSL_PCDIR\"" >&6;}
+@@ -22375,8 +22380,10 @@ $as_echo "$as_me: PKG_CONFIG_LIBDIR will be set to \"$OPENSSL_PCDIR\"" >&6;}
  
              LIB_OPENSSL="$PREFIX_OPENSSL/lib$libsuff"
      if test "$PREFIX_OPENSSL" != "/usr" ; then
@@ -173,7 +173,7 @@ index 5eea112..c666c7c 100755
      fi
      SSL_CPPFLAGS="$SSL_CPPFLAGS -I$PREFIX_OPENSSL/include/openssl"
      ;;
-@@ -22499,12 +22506,14 @@ $as_echo "found" >&6; }
+@@ -22519,12 +22526,14 @@ $as_echo "found" >&6; }
      fi
           $PKGCONFIG --libs-only-l --libs-only-other openssl 2>/dev/null`
  
@@ -189,7 +189,7 @@ index 5eea112..c666c7c 100755
  
        SSL_CPPFLAGS=`
      if test -n "$OPENSSL_PCDIR"; then
-@@ -27564,15 +27573,17 @@ $as_echo "$as_me: -l is $LIB_H2" >&6;}
+@@ -27541,15 +27550,17 @@ $as_echo "$as_me: -l is $LIB_H2" >&6;}
      { $as_echo "$as_me:${as_lineno-$LINENO}: -I is $CPP_H2" >&5
  $as_echo "$as_me: -I is $CPP_H2" >&6;}
  
