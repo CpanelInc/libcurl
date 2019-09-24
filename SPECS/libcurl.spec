@@ -8,7 +8,7 @@
 %define prefix_inc %{prefix_dir}/include
 %define _unpackaged_files_terminate_build 0
 %define _defaultdocdir %{_prefix}/share/doc
-%define ea_openssl_ver 1.0.2o-2
+%define ea_openssl_ver 1.1.1d-1
 %define ea_nghttp2_ver 1.20.0-7
 
 %define debug_package %{nil}
@@ -16,7 +16,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.67.0
-%define release_prefix 2
+%define release_prefix 3
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -148,6 +148,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Wed Dec 18 2019 Danie Muey <dan@cpanel.net> - 7.67.0-3
+- ZC-4361: Update ea-openssl requirement to v1.1.1 (ZC-5583)
+
 * Thu Nov 21 2019 Tim Mullin <tim@cpanel.net> - 7.67.0-2
 - EA-8754: Patch libcurl 7.67.0 for OpenSSL issue breaking WHMCS
 
