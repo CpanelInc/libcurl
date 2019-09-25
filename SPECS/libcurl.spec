@@ -46,7 +46,7 @@ Patch1: 0002-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
 Patch2: 0003-openssl-Revert-to-less-sensitivity-for-SYSCALL-error.patch
 
 Requires: libssh2
-Requires: ea-openssl >= %{ea_openssl_ver}
+Requires: ea-openssl11 >= %{ea_openssl_ver}
 Requires: krb5-libs
 Requires: ea-nghttp2 >= %{ea_nghttp2_ver}
 Requires: ea-brotli
@@ -54,8 +54,8 @@ BuildRequires: valgrind
 BuildRequires: libidn libidn-devel
 BuildRequires: libssh2 libssh2-devel
 BuildRequires: krb5-devel
-BuildRequires: ea-openssl >= %{ea_openssl_ver}
-BuildRequires: ea-openssl-devel >= %{ea_openssl_ver}
+BuildRequires: ea-openssl11 >= %{ea_openssl_ver}
+BuildRequires: ea-openssl11-devel >= %{ea_openssl_ver}
 BuildRequires: ea-libnghttp2 >= %{ea_nghttp2_ver}
 BuildRequires: ea-libnghttp2-devel >= %{ea_nghttp2_ver}
 BuildRequires: ea-brotli, ea-brotli-devel
@@ -87,7 +87,7 @@ cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.
 
 export LIBS="-ldl"
 %configure \
- --with-ssl=/opt/cpanel/ea-openssl \
+ --with-ssl=/opt/cpanel/ea-openssl11 \
  --with-ca-bundle=/etc/pki/tls/certs/ca-bundle.crt \
  --with-libssh2=/usr/local \
  --with-gssapi \
@@ -96,7 +96,7 @@ export LIBS="-ldl"
  --enable-unix-sockets \
  --with-nghttp2=/opt/cpanel/nghttp2/ \
  --with-brotli=/opt/cpanel/ea-brotli/ \
- SSL_LDFLAGS="-L/opt/cpanel/ea-openssl/%{_lib} -Wl,-rpath=/opt/cpanel/ea-openssl/%{_lib} " \
+ SSL_LDFLAGS="-L/opt/cpanel/ea-openssl11/%{_lib} -Wl,-rpath=/opt/cpanel/ea-openssl11/%{_lib} " \
  LD_H2="-L/opt/cpanel/nghttp2/lib -Wl,-rpath=/opt/cpanel/nghttp2/lib " \
  LD_BROTLI="-L/opt/cpanel/ea-brotli/lib -Wl,-rpath=/opt/cpanel/ea-brotli/lib "
 
