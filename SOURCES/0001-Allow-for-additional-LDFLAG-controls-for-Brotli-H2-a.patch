@@ -1,4 +1,4 @@
-From 20d75cfd70fce59b42d25a94be5862ed2a33b96f Mon Sep 17 00:00:00 2001
+From b15bfad914bffc111e59dd74c2b41f16ca8bc7ac Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 12 Jul 2018 13:52:17 -0500
 Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
@@ -10,10 +10,10 @@ Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
  2 files changed, 24 insertions(+), 7 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 07e0a50..51dc13d 100755
+index cb8f494..e698f13 100755
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1055,7 +1055,9 @@ if test X"$OPT_BROTLI" != Xno; then
+@@ -1056,7 +1056,9 @@ if test X"$OPT_BROTLI" != Xno; then
    dnl if given with a prefix, we set -L and -I based on that
    if test -n "$PREFIX_BROTLI"; then
      LIB_BROTLI="-lbrotlidec"
@@ -24,7 +24,7 @@ index 07e0a50..51dc13d 100755
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -1669,8 +1671,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
+@@ -1666,8 +1668,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
      dnl via --with-ssl
      LIB_OPENSSL="$PREFIX_OPENSSL/lib$libsuff"
      if test "$PREFIX_OPENSSL" != "/usr" ; then
@@ -37,7 +37,7 @@ index 07e0a50..51dc13d 100755
      fi
      SSL_CPPFLAGS="$SSL_CPPFLAGS -I$PREFIX_OPENSSL/include/openssl"
      ;;
-@@ -1684,8 +1688,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
+@@ -1681,8 +1685,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
        SSL_LIBS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --libs-only-l --libs-only-other openssl 2>/dev/null`
  
@@ -49,7 +49,7 @@ index 07e0a50..51dc13d 100755
  
        SSL_CPPFLAGS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --cflags-only-I openssl 2>/dev/null`
-@@ -3301,9 +3307,11 @@ if test X"$want_h2" != Xno; then
+@@ -3240,9 +3246,11 @@ if test X"$want_h2" != Xno; then
        $PKGCONFIG --cflags-only-I libnghttp2`
      AC_MSG_NOTICE([-I is $CPP_H2])
  
