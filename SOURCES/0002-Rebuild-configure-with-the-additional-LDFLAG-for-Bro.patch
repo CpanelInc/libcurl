@@ -1,7 +1,7 @@
-From fe238f8f65639f8f669e00be88904827ae0efa39 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 12 Jul 2018 13:53:29 -0500
-Subject: [PATCH 2/2] Rebuild configure with the additional LDFLAG for Brotli,
+Subject: [PATCH 2/3] Rebuild configure with the additional LDFLAG for Brotli,
  H2, and SSL
 
 ---
@@ -210,6 +210,3 @@ index b703b6c..db2b1d7 100755
  
      LDFLAGS="$LDFLAGS $LD_H2"
      CPPFLAGS="$CPPFLAGS $CPP_H2"
--- 
-2.21.0
-

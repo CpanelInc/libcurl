@@ -40,9 +40,20 @@ sub _get_required {
     return ( $version, $url, $name );
 }
 
-
 sub _add_sum {
     my ( $http, $hr ) = @_;
+
+    my $res = $http->get( $hr->{tarball}{url} . ".asc" );
+    if ( !$res->{success} ) {
+        die "Could not GET GPG signature ($res->{status} $res->{reason})\n";
+    }
+
+    $hr->{tarball}{sum}{type} = "gpg";
+    $hr->{tarball}{sum}{gpg}  = {
+        key_url        => 'https://daniel.haxx.se/mykey.asc',
+        signature_data => $res->content,
+        key_email      => 'daniel@haxx.se',
+    };
 
     return;
 }
