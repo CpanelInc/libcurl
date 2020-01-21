@@ -8,7 +8,7 @@
 %define prefix_inc %{prefix_dir}/include
 %define _unpackaged_files_terminate_build 0
 %define _defaultdocdir %{_prefix}/share/doc
-%define ea_openssl_ver 1.0.2o-2
+%define ea_openssl_ver 1.1.1d-1
 %define ea_nghttp2_ver 1.20.0-7
 
 %define debug_package %{nil}
@@ -16,7 +16,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.67.0
-%define release_prefix 2
+%define release_prefix 3
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -46,7 +46,7 @@ Patch1: 0002-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
 Patch2: 0003-openssl-Revert-to-less-sensitivity-for-SYSCALL-error.patch
 
 Requires: libssh2
-Requires: ea-openssl >= %{ea_openssl_ver}
+Requires: ea-openssl11 >= %{ea_openssl_ver}
 Requires: krb5-libs
 Requires: ea-nghttp2 >= %{ea_nghttp2_ver}
 Requires: ea-brotli
@@ -54,8 +54,8 @@ BuildRequires: valgrind
 BuildRequires: libidn libidn-devel
 BuildRequires: libssh2 libssh2-devel
 BuildRequires: krb5-devel
-BuildRequires: ea-openssl >= %{ea_openssl_ver}
-BuildRequires: ea-openssl-devel >= %{ea_openssl_ver}
+BuildRequires: ea-openssl11 >= %{ea_openssl_ver}
+BuildRequires: ea-openssl11-devel >= %{ea_openssl_ver}
 BuildRequires: ea-libnghttp2 >= %{ea_nghttp2_ver}
 BuildRequires: ea-libnghttp2-devel >= %{ea_nghttp2_ver}
 BuildRequires: ea-brotli, ea-brotli-devel
@@ -87,7 +87,7 @@ cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.
 
 export LIBS="-ldl"
 %configure \
- --with-ssl=/opt/cpanel/ea-openssl \
+ --with-ssl=/opt/cpanel/ea-openssl11 \
  --with-ca-bundle=/etc/pki/tls/certs/ca-bundle.crt \
  --with-libssh2=/usr/local \
  --with-gssapi \
@@ -96,7 +96,7 @@ export LIBS="-ldl"
  --enable-unix-sockets \
  --with-nghttp2=/opt/cpanel/nghttp2/ \
  --with-brotli=/opt/cpanel/ea-brotli/ \
- SSL_LDFLAGS="-L/opt/cpanel/ea-openssl/%{_lib} -Wl,-rpath=/opt/cpanel/ea-openssl/%{_lib} " \
+ SSL_LDFLAGS="-L/opt/cpanel/ea-openssl11/%{_lib} -Wl,-rpath=/opt/cpanel/ea-openssl11/%{_lib} " \
  LD_H2="-L/opt/cpanel/nghttp2/lib -Wl,-rpath=/opt/cpanel/nghttp2/lib " \
  LD_BROTLI="-L/opt/cpanel/ea-brotli/lib -Wl,-rpath=/opt/cpanel/ea-brotli/lib "
 
@@ -148,6 +148,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Wed Dec 18 2019 Danie Muey <dan@cpanel.net> - 7.67.0-3
+- ZC-4361: Update ea-openssl requirement to v1.1.1 (ZC-5583)
+
 * Thu Nov 21 2019 Tim Mullin <tim@cpanel.net> - 7.67.0-2
 - EA-8754: Patch libcurl 7.67.0 for OpenSSL issue breaking WHMCS
 
