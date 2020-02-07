@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 12 Jul 2018 13:52:17 -0500
-Subject: [PATCH 1/3] Allow for additional LDFLAG controls for Brotli, H2, and
+Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
  SSL
 
 ---
@@ -10,7 +10,7 @@ Subject: [PATCH 1/3] Allow for additional LDFLAG controls for Brotli, H2, and
  2 files changed, 24 insertions(+), 7 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index cb8f494..e698f13 100755
+index dd149b7..f14931d 100755
 --- a/configure.ac
 +++ b/configure.ac
 @@ -1056,7 +1056,9 @@ if test X"$OPT_BROTLI" != Xno; then
@@ -24,7 +24,7 @@ index cb8f494..e698f13 100755
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -1666,8 +1668,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
+@@ -1677,8 +1679,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
      dnl via --with-ssl
      LIB_OPENSSL="$PREFIX_OPENSSL/lib$libsuff"
      if test "$PREFIX_OPENSSL" != "/usr" ; then
@@ -37,7 +37,7 @@ index cb8f494..e698f13 100755
      fi
      SSL_CPPFLAGS="$SSL_CPPFLAGS -I$PREFIX_OPENSSL/include/openssl"
      ;;
-@@ -1681,8 +1685,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
+@@ -1692,8 +1696,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
        SSL_LIBS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --libs-only-l --libs-only-other openssl 2>/dev/null`
  
@@ -49,7 +49,7 @@ index cb8f494..e698f13 100755
  
        SSL_CPPFLAGS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --cflags-only-I openssl 2>/dev/null`
-@@ -3240,9 +3246,11 @@ if test X"$want_h2" != Xno; then
+@@ -3343,9 +3349,11 @@ if test X"$want_h2" != Xno; then
        $PKGCONFIG --cflags-only-I libnghttp2`
      AC_MSG_NOTICE([-I is $CPP_H2])
  
