@@ -15,8 +15,8 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.67.0
-%define release_prefix 3
+Version: 7.68.0
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -43,7 +43,6 @@ BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 # 4. Build the final patch files with:
 #   4a. git format-patch --zero-commit --no-signature master..patches
 Patch1: 0002-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
-Patch2: 0003-openssl-Revert-to-less-sensitivity-for-SYSCALL-error.patch
 
 Requires: libssh2
 Requires: ea-openssl11 >= %{ea_openssl_ver}
@@ -80,7 +79,6 @@ headers, and manual pages to develop applications using libcurl.
 
 %setup -q -n curl-%{version}
 %patch1 -p1 -b .sslldflags
-%patch2 -p1 -b .sslldflags
 
 %build
 cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.rpm; fi)
@@ -148,6 +146,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Fri Feb 07 2020 Tim Mullin <tim@cpanel.net> - 7.68.0-1
+- EA-8843: Update libcurl from v7.67.0 to v7.68.0
+
 * Wed Dec 18 2019 Danie Muey <dan@cpanel.net> - 7.67.0-3
 - ZC-4361: Update ea-openssl requirement to v1.1.1 (ZC-5583)
 
