@@ -1,4 +1,4 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From 16057839856770b9852e29523c0dd023ab4940bc Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 12 Jul 2018 13:52:17 -0500
 Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
@@ -10,7 +10,7 @@ Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
  2 files changed, 24 insertions(+), 7 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index dd149b7..f14931d 100755
+index e7ad639..fd95eaf 100755
 --- a/configure.ac
 +++ b/configure.ac
 @@ -1056,7 +1056,9 @@ if test X"$OPT_BROTLI" != Xno; then
@@ -49,7 +49,7 @@ index dd149b7..f14931d 100755
  
        SSL_CPPFLAGS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --cflags-only-I openssl 2>/dev/null`
-@@ -3343,9 +3349,11 @@ if test X"$want_h2" != Xno; then
+@@ -3377,9 +3383,11 @@ if test X"$want_h2" != Xno; then
        $PKGCONFIG --cflags-only-I libnghttp2`
      AC_MSG_NOTICE([-I is $CPP_H2])
  
@@ -65,7 +65,7 @@ index dd149b7..f14931d 100755
      LDFLAGS="$LDFLAGS $LD_H2"
      CPPFLAGS="$CPPFLAGS $CPP_H2"
 diff --git a/m4/libtool.m4 b/m4/libtool.m4
-index 90924a6..822bd48 100644
+index 3a03d84..1a3bf71 100644
 --- a/m4/libtool.m4
 +++ b/m4/libtool.m4
 @@ -2378,6 +2378,15 @@ hardcode_into_libs=no
@@ -84,3 +84,6 @@ index 90924a6..822bd48 100644
  AC_ARG_VAR([LT_SYS_LIBRARY_PATH],
  [User-defined run-time library search path.])
  
+-- 
+2.24.1
+
