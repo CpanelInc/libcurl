@@ -15,7 +15,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.68.0
+Version: 7.69.1
 %define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -150,8 +150,11 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
-* Thu Mar 26 2020 Tim Mullin <tim@cpanel.net> - 7.68.0-2
+* Tue Mar 31 2020 Tim Mullin <tim@cpanel.net> - 7.69.1-2
 - EA-8928: Added version check for libssh2
+
+* Fri Mar 27 2020 Cory McIntire <cory@cpanel.net> - 7.69.1-1
+- EA-8947: Update libcurl from v7.68.0 to v7.69.1
 
 * Fri Feb 07 2020 Tim Mullin <tim@cpanel.net> - 7.68.0-1
 - EA-8843: Update libcurl from v7.67.0 to v7.68.0
