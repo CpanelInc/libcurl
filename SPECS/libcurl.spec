@@ -130,7 +130,7 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %doc CHANGES COPYING README docs/BUGS
 %doc docs/FAQ docs/FEATURES docs/INSTALL
 %doc docs/KNOWN_BUGS docs/RESOURCES docs/THANKS
-%doc docs/TODO docs/VERSIONS docs/TheArtOfHttpScripting
+%doc docs/TODO docs/VERSIONS.md docs/TheArtOfHttpScripting
 %dir %{_defaultdocdir}
 
 %files -n %{pkg_name}-devel
