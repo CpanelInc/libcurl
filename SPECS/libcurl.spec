@@ -15,7 +15,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.70.0
+Version: 7.71.0
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -130,7 +130,7 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %doc CHANGES COPYING README docs/BUGS
 %doc docs/FAQ docs/FEATURES docs/INSTALL
 %doc docs/KNOWN_BUGS docs/RESOURCES docs/THANKS
-%doc docs/TODO docs/VERSIONS docs/TheArtOfHttpScripting
+%doc docs/TODO docs/VERSIONS.md docs/TheArtOfHttpScripting
 %dir %{_defaultdocdir}
 
 %files -n %{pkg_name}-devel
@@ -150,6 +150,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Wed Jun 24 2020 Cory McIntire <cory@cpanel.net> - 7.71.0-1
+- EA-9124: Update libcurl from v7.70.0 to v7.71.0
+
 * Wed Apr 29 2020 Cory McIntire <cory@cpanel.net> - 7.70.0-1
 - EA-9044: Update libcurl from v7.69.1 to v7.70.0
 
