@@ -1,4 +1,4 @@
-From 494b0ef2c3c98054db72777d19a9fe2df14a536e Mon Sep 17 00:00:00 2001
+From 5d84457127927215cf3dec95921a14a6d3525054 Mon Sep 17 00:00:00 2001
 From: Tim Mullin <tim@cpanel.net>
 Date: Fri, 7 Feb 2020 12:33:24 -0600
 Subject: [PATCH 2/2] Rebuild configure with the additional LDFLAG for Brotli,
