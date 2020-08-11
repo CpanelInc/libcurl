@@ -1,4 +1,4 @@
-From 7dc71db3633f7348051de519713dc3eb452d2238 Mon Sep 17 00:00:00 2001
+From 0e7d8d59d469df2d3683d223a8fe925a79871fca Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 12 Jul 2018 13:52:17 -0500
 Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
