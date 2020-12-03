@@ -16,7 +16,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.73.0
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -49,7 +49,17 @@ Requires: libssh2 >= 1.4.2
 %else
 Requires: libssh2 >= 1.8.0
 %endif
+%if 0%{?rhel} < 8
 Requires: ea-openssl11 >= %{ea_openssl_ver}
+BuildRequires: ea-openssl11 >= %{ea_openssl_ver}
+BuildRequires: ea-openssl11-devel >= %{ea_openssl_ver}
+%else
+# In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
+Requires: openssl
+BuildRequires: openssl
+BuildRequires: openssl
+%endif
+
 Requires: krb5-libs
 Requires: ea-nghttp2 >= %{ea_nghttp2_ver}
 Requires: ea-brotli
@@ -57,8 +67,6 @@ BuildRequires: valgrind
 BuildRequires: libidn libidn-devel
 BuildRequires: libssh2 libssh2-devel
 BuildRequires: krb5-devel
-BuildRequires: ea-openssl11 >= %{ea_openssl_ver}
-BuildRequires: ea-openssl11-devel >= %{ea_openssl_ver}
 BuildRequires: ea-libnghttp2 >= %{ea_nghttp2_ver}
 BuildRequires: ea-libnghttp2-devel >= %{ea_nghttp2_ver}
 BuildRequires: ea-brotli, ea-brotli-devel
@@ -89,7 +97,11 @@ cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.
 
 export LIBS="-ldl"
 %configure \
+%if 0%{?rhel} < 8
  --with-ssl=/opt/cpanel/ea-openssl11 \
+%else
+ --with-ssl \
+%endif
  --with-ca-bundle=/etc/pki/tls/certs/ca-bundle.crt \
  --with-libssh2=/usr/local \
  --with-gssapi \
@@ -98,7 +110,9 @@ export LIBS="-ldl"
  --enable-unix-sockets \
  --with-nghttp2=/opt/cpanel/nghttp2/ \
  --with-brotli=/opt/cpanel/ea-brotli/ \
+%if 0%{?rhel} < 8
  SSL_LDFLAGS="-L/opt/cpanel/ea-openssl11/%{_lib} -Wl,-rpath=/opt/cpanel/ea-openssl11/%{_lib} " \
+%endif
  LD_H2="-L/opt/cpanel/nghttp2/lib -Wl,-rpath=/opt/cpanel/nghttp2/lib " \
  LD_BROTLI="-L/opt/cpanel/ea-brotli/lib -Wl,-rpath=/opt/cpanel/ea-brotli/lib "
 
@@ -150,6 +164,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Tue Nov 24 2020 Julian Brown <julian.brown@cpanel.net> - 7.73.0-2
+- ZC-8005: Replace ea-openssl11 with system openssl on C8
+
 * Wed Oct 14 2020 Cory McIntire <cory@cpanel.net> - 7.73.0-1
 - EA-9371: Update libcurl from v7.72.0 to v7.73.0
 
