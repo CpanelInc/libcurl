@@ -142,7 +142,7 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{prefix_inc}
 %dir %{prefix_lib}
 %doc CHANGES COPYING README
-%doc docs/FAQ docs/FEATURES docs/INSTALL
+%doc docs/FAQ docs/FEATURES.md docs/INSTALL
 %doc docs/KNOWN_BUGS docs/THANKS
 %doc docs/TODO docs/VERSIONS.md
 %dir %{_defaultdocdir}
