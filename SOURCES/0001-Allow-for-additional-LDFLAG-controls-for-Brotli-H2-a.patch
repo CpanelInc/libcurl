@@ -10,10 +10,10 @@ Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
  2 files changed, 24 insertions(+), 7 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 39bdb5e..e7a4c51 100755
+index e72aca6..8c4f286 100755
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1080,7 +1080,9 @@ if test X"$OPT_BROTLI" != Xno; then
+@@ -1083,7 +1083,9 @@ if test X"$OPT_BROTLI" != Xno; then
    dnl if given with a prefix, we set -L and -I based on that
    if test -n "$PREFIX_BROTLI"; then
      LIB_BROTLI="-lbrotlidec"
@@ -24,7 +24,7 @@ index 39bdb5e..e7a4c51 100755
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -1784,8 +1786,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
+@@ -1787,8 +1789,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
      dnl via --with-ssl
      LIB_OPENSSL="$PREFIX_OPENSSL/lib$libsuff"
      if test "$PREFIX_OPENSSL" != "/usr" ; then
@@ -37,7 +37,7 @@ index 39bdb5e..e7a4c51 100755
      fi
      SSL_CPPFLAGS="$SSL_CPPFLAGS -I$PREFIX_OPENSSL/include/openssl"
      ;;
-@@ -1799,8 +1803,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
+@@ -1802,8 +1806,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
        SSL_LIBS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --libs-only-l --libs-only-other openssl 2>/dev/null`
  
@@ -49,7 +49,7 @@ index 39bdb5e..e7a4c51 100755
  
        SSL_CPPFLAGS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --cflags-only-I openssl 2>/dev/null`
-@@ -3570,9 +3576,11 @@ if test X"$want_h2" != Xno; then
+@@ -3572,9 +3578,11 @@ if test X"$want_h2" != Xno; then
        $PKGCONFIG --cflags-only-I libnghttp2`
      AC_MSG_NOTICE([-I is $CPP_H2])
  
@@ -65,7 +65,7 @@ index 39bdb5e..e7a4c51 100755
      LDFLAGS="$LDFLAGS $LD_H2"
      CPPFLAGS="$CPPFLAGS $CPP_H2"
 diff --git a/m4/libtool.m4 b/m4/libtool.m4
-index a6d21ae..8ec1e98 100644
+index c4c0294..7599bd4 100644
 --- a/m4/libtool.m4
 +++ b/m4/libtool.m4
 @@ -2378,6 +2378,15 @@ hardcode_into_libs=no
