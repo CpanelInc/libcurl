@@ -10,10 +10,10 @@ Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
  2 files changed, 24 insertions(+), 7 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index e72aca6..8c4f286 100755
+index f662481..7695245 100755
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1083,7 +1083,9 @@ if test X"$OPT_BROTLI" != Xno; then
+@@ -1087,7 +1087,9 @@ if test X"$OPT_BROTLI" != Xno; then
    dnl if given with a prefix, we set -L and -I based on that
    if test -n "$PREFIX_BROTLI"; then
      LIB_BROTLI="-lbrotlidec"
@@ -24,7 +24,7 @@ index e72aca6..8c4f286 100755
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -1787,8 +1789,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
+@@ -1803,8 +1805,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
      dnl via --with-ssl
      LIB_OPENSSL="$PREFIX_OPENSSL/lib$libsuff"
      if test "$PREFIX_OPENSSL" != "/usr" ; then
@@ -37,7 +37,7 @@ index e72aca6..8c4f286 100755
      fi
      SSL_CPPFLAGS="$SSL_CPPFLAGS -I$PREFIX_OPENSSL/include/openssl"
      ;;
-@@ -1802,8 +1806,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
+@@ -1818,8 +1822,10 @@ if test -z "$ssl_backends" -o "x$OPT_SSL" != xno &&
        SSL_LIBS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --libs-only-l --libs-only-other openssl 2>/dev/null`
  
@@ -49,7 +49,7 @@ index e72aca6..8c4f286 100755
  
        SSL_CPPFLAGS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --cflags-only-I openssl 2>/dev/null`
-@@ -3572,9 +3578,11 @@ if test X"$want_h2" != Xno; then
+@@ -3689,9 +3695,11 @@ if test X"$want_h2" != Xno; then
        $PKGCONFIG --cflags-only-I libnghttp2`
      AC_MSG_NOTICE([-I is $CPP_H2])
  
