@@ -1,0 +1,59 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Tim Mullin <tim@cpanel.net>
+Date: Fri, 12 Nov 2021 21:31:46 +0000
+Subject: [PATCH 2/3] Revert "configure.ac: replace krb5-config with
+ pkg-config"
+
+We needed to revert this change to fix the build on
+CentOS 6.
+
+This reverts commit 6fe4e7d3bfc1520da032ea067b4712cc1357f016.
+---
+ configure.ac | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 81b8b55..ff1e9e7 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1679,17 +1679,18 @@ AC_ARG_WITH(gssapi,
+   fi
+ ])
+ 
++: ${KRB5CONFIG:="$GSSAPI_ROOT/bin/krb5-config"}
++
+ save_CPPFLAGS="$CPPFLAGS"
+ AC_MSG_CHECKING([if GSS-API support is requested])
+ if test x"$want_gss" = xyes; then
+   AC_MSG_RESULT(yes)
+ 
+-  CURL_CHECK_PKGCONFIG(mit-krb5-gssapi)
+   if test -z "$GSSAPI_INCS"; then
+      if test -n "$host_alias" -a -f "$GSSAPI_ROOT/bin/$host_alias-krb5-config"; then
+         GSSAPI_INCS=`$GSSAPI_ROOT/bin/$host_alias-krb5-config --cflags gssapi`
+-     elif test "$PKGCONFIG" != "no" ; then
+-        GSSAPI_INCS=`$PKGCONFIG --cflags mit-krb5-gssapi`
++     elif test -f "$KRB5CONFIG"; then
++        GSSAPI_INCS=`$KRB5CONFIG --cflags gssapi`
+      elif test "$GSSAPI_ROOT" != "yes"; then
+         GSSAPI_INCS="-I$GSSAPI_ROOT/include"
+      fi
+@@ -1774,14 +1775,15 @@ if test x"$want_gss" = xyes; then
+         LIBS="-lgssapi_krb5 -lresolv $LIBS"
+         ;;
+      *)
+-        CURL_CHECK_PKGCONFIG(mit-krb5-gssapi)
+         if test -n "$host_alias" -a -f "$GSSAPI_ROOT/bin/$host_alias-krb5-config"; then
+            dnl krb5-config doesn't have --libs-only-L or similar, put everything
+            dnl into LIBS
+            gss_libs=`$GSSAPI_ROOT/bin/$host_alias-krb5-config --libs gssapi`
+            LIBS="$gss_libs $LIBS"
+-        elif test "$PKGCONFIG" != "no" ; then
+-           gss_libs=`$PKGCONFIG --libs mit-krb5-gssapi`
++        elif test -f "$KRB5CONFIG"; then
++           dnl krb5-config doesn't have --libs-only-L or similar, put everything
++           dnl into LIBS
++           gss_libs=`$KRB5CONFIG --libs gssapi`
+            LIBS="$gss_libs $LIBS"
+         else
+            case $host in

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 12 Jul 2018 13:52:17 -0500
-Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
+Subject: [PATCH 1/3] Allow for additional LDFLAG controls for Brotli, H2, and
  SSL
 
 ---
@@ -11,10 +11,10 @@ Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
  3 files changed, 24 insertions(+), 7 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 152b047..2a9ec56 100644
+index 0c23847..81b8b55 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1324,7 +1324,9 @@ if test X"$OPT_BROTLI" != Xno; then
+@@ -1308,7 +1308,9 @@ if test X"$OPT_BROTLI" != Xno; then
    dnl if given with a prefix, we set -L and -I based on that
    if test -n "$PREFIX_BROTLI"; then
      LIB_BROTLI="-lbrotlidec"
@@ -25,15 +25,15 @@ index 152b047..2a9ec56 100644
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -2580,9 +2582,11 @@ if test X"$want_h2" != Xno; then
+@@ -2556,9 +2558,11 @@ if test X"$want_nghttp2" != Xno; then
        $PKGCONFIG --cflags-only-I libnghttp2`
      AC_MSG_NOTICE([-I is $CPP_H2])
  
--    LD_H2=`CURL_EXPORT_PCDIR([$want_h2_path])
+-    LD_H2=`CURL_EXPORT_PCDIR([$want_nghttp2_path])
 -      $PKGCONFIG --libs-only-L libnghttp2`
 -    AC_MSG_NOTICE([-L is $LD_H2])
 +    if test -z $LD_H2; then
-+        LD_H2=`CURL_EXPORT_PCDIR([$want_h2_path])
++        LD_H2=`CURL_EXPORT_PCDIR([$want_nghttp2_path])
 +          $PKGCONFIG --libs-only-L libnghttp2`
 +        AC_MSG_NOTICE([-L is $LD_H2])
 +    fi
@@ -41,7 +41,7 @@ index 152b047..2a9ec56 100644
      LDFLAGS="$LDFLAGS $LD_H2"
      CPPFLAGS="$CPPFLAGS $CPP_H2"
 diff --git a/m4/curl-openssl.m4 b/m4/curl-openssl.m4
-index f844624..20de48b 100644
+index 5309f33..c8736c5 100644
 --- a/m4/curl-openssl.m4
 +++ b/m4/curl-openssl.m4
 @@ -375,8 +375,10 @@ if test "x$OPT_OPENSSL" != xno; then

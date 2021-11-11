@@ -25,24 +25,25 @@ Source: curl-%{version}.tar.gz
 URL: http://curl.haxx.se/
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 
-# ***NOTE*** This patch is 'built with' the 0001 patch.
-# The 0001 (configure.ac) patch in SOURCES is not used directly during the RPM build process,
-# it is used for building the 0002 patch itself whenever a newer version of curl is released.
+# ***NOTE*** This patch is 'built with' the 0001 & 0002 patches.
+# The 0001 & 0002 (configure.ac) patches in SOURCES are not used directly during the RPM build process,
+# they are used for building the 0003 patch itself whenever a newer version of curl is released.
 # General process here is:
 #
 # 1. Download/extract latest version of curl, and initial a git repo there as so:
 #   1a. git init .
 #   1b. git add .
 #   1c. git commit -m "init"
-# 2. Create a patches branch, and apply the 0001 patch to the extracted content as so:
+# 2. Create a patches branch, and apply the 0001 & 0002 patches to the extracted content as so:
 #   2a. git checkout -b "patches"
 #   2b. git am </path/to/0001patch>
+#   2c. git am </path/to/0002patch>
 # 3. Run "autoconf" to update the configure file, and then commit the updated file to the patches branch:
 #   3a. git add configure
 #   3b. git commit
 # 4. Build the final patch files with:
 #   4a. git format-patch --zero-commit --no-signature master..patches
-Patch1: 0002-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
+Patch1: 0003-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
 
 %if 0%{?rhel} < 7
 Requires: libssh2 >= 1.4.2
