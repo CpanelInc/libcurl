@@ -15,7 +15,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.79.1
+Version: 7.80.0
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -25,24 +25,25 @@ Source: curl-%{version}.tar.gz
 URL: http://curl.haxx.se/
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 
-# ***NOTE*** This patch is 'built with' the 0001 patch.
-# The 0001 (configure.ac) patch in SOURCES is not used directly during the RPM build process,
-# it is used for building the 0002 patch itself whenever a newer version of curl is released.
+# ***NOTE*** This patch is 'built with' the 0001 & 0002 patches.
+# The 0001 & 0002 (configure.ac) patches in SOURCES are not used directly during the RPM build process,
+# they are used for building the 0003 patch itself whenever a newer version of curl is released.
 # General process here is:
 #
 # 1. Download/extract latest version of curl, and initial a git repo there as so:
 #   1a. git init .
 #   1b. git add .
 #   1c. git commit -m "init"
-# 2. Create a patches branch, and apply the 0001 patch to the extracted content as so:
+# 2. Create a patches branch, and apply the 0001 & 0002 patches to the extracted content as so:
 #   2a. git checkout -b "patches"
 #   2b. git am </path/to/0001patch>
+#   2c. git am </path/to/0002patch>
 # 3. Run "autoconf" to update the configure file, and then commit the updated file to the patches branch:
 #   3a. git add configure
 #   3b. git commit
 # 4. Build the final patch files with:
 #   4a. git format-patch --zero-commit --no-signature master..patches
-Patch1: 0002-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
+Patch1: 0003-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
 
 %if 0%{?rhel} < 7
 Requires: libssh2 >= 1.4.2
@@ -164,6 +165,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Thu Nov 11 2021 Tim Mullin <tim@cpanel.net> - 7.80.0-1
+- EA-10274: Update libcurl from v7.79.1 to v7.80.0
+
 * Fri Sep 24 2021 Cory McIntire <cory@cpanel.net> - 7.79.1-1
 - EA-10135: Update libcurl from v7.79.0 to v7.79.1
 
