@@ -1,0 +1,427 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Tim Mullin <tim@cpanel.net>
+Date: Fri, 12 Nov 2021 22:04:58 +0000
+Subject: [PATCH 3/3] Rebuild configure with the additional LDFLAG for Brotli,
+ H2, and SSL
+
+---
+ configure | 319 ++++++------------------------------------------------
+ 1 file changed, 36 insertions(+), 283 deletions(-)
+
+diff --git a/configure b/configure
+index 2d73516..32f0a2b 100755
+--- a/configure
++++ b/configure
+@@ -1022,6 +1022,9 @@ CURL_LT_SHLIB_USE_NO_UNDEFINED_TRUE
+ CURL_LT_SHLIB_USE_VERSION_INFO_FALSE
+ CURL_LT_SHLIB_USE_VERSION_INFO_TRUE
+ LT_SYS_LIBRARY_PATH
++LD_BROTLI
++LD_H2
++SSL_LDFLAGS
+ OTOOL64
+ OTOOL
+ LIPO
+@@ -1273,6 +1276,9 @@ LDFLAGS
+ LIBS
+ CPPFLAGS
+ CPP
++SSL_LDFLAGS
++LD_H2
++LD_BROTLI
+ LT_SYS_LIBRARY_PATH'
+ ac_subdirs_all='ares'
+ 
+@@ -2156,6 +2162,9 @@ Some influential environment variables:
+   CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
+               you have headers in a nonstandard directory <include dir>
+   CPP         C preprocessor
++  SSL_LDFLAGS User-defined LDFLAGS for SSL.
++  LD_H2       User-defined LDFLAGS for nghttp2.
++  LD_BROTLI   User-defined LDFLAGS for brotli.
+   LT_SYS_LIBRARY_PATH
+               User-defined run-time library search path.
+ 
+@@ -14663,6 +14672,12 @@ need_version=unknown
+ 
+ 
+ 
++
++
++
++
++
++
+ case $host_os in
+ aix3*)
+   version_type=linux # correct to gnu/linux during the next big refactor
+@@ -23055,7 +23070,9 @@ printf "%s\n" "found" >&6; }
+ 
+     if test -n "$PREFIX_BROTLI"; then
+     LIB_BROTLI="-lbrotlidec"
+-    LD_BROTLI=-L${PREFIX_BROTLI}/lib$libsuff
++    if test -z $LD_BROTLI; then
++        LD_BROTLI=-L${PREFIX_BROTLI}/lib$libsuff
++    fi
+     CPP_BROTLI=-I${PREFIX_BROTLI}/include
+     DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
+   fi
+@@ -24274,6 +24291,8 @@ then :
+ fi
+ 
+ 
++: ${KRB5CONFIG:="$GSSAPI_ROOT/bin/krb5-config"}
++
+ save_CPPFLAGS="$CPPFLAGS"
+ { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if GSS-API support is requested" >&5
+ printf %s "checking if GSS-API support is requested... " >&6; }
+@@ -24281,147 +24300,11 @@ if test x"$want_gss" = xyes; then
+   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ printf "%s\n" "yes" >&6; }
+ 
+-
+-    if test -n "$PKG_CONFIG"; then
+-      PKGCONFIG="$PKG_CONFIG"
+-    else
+-      if test -n "$ac_tool_prefix"; then
+-  # Extract the first word of "${ac_tool_prefix}pkg-config", so it can be a program name with args.
+-set dummy ${ac_tool_prefix}pkg-config; ac_word=$2
+-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+-printf %s "checking for $ac_word... " >&6; }
+-if test ${ac_cv_path_PKGCONFIG+y}
+-then :
+-  printf %s "(cached) " >&6
+-else $as_nop
+-  case $PKGCONFIG in
+-  [\\/]* | ?:[\\/]*)
+-  ac_cv_path_PKGCONFIG="$PKGCONFIG" # Let the user override the test with a path.
+-  ;;
+-  *)
+-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+-as_dummy="$PATH:/usr/bin:/usr/local/bin"
+-for as_dir in $as_dummy
+-do
+-  IFS=$as_save_IFS
+-  case $as_dir in #(((
+-    '') as_dir=./ ;;
+-    */) ;;
+-    *) as_dir=$as_dir/ ;;
+-  esac
+-    for ac_exec_ext in '' $ac_executable_extensions; do
+-  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
+-    ac_cv_path_PKGCONFIG="$as_dir$ac_word$ac_exec_ext"
+-    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
+-    break 2
+-  fi
+-done
+-  done
+-IFS=$as_save_IFS
+-
+-  ;;
+-esac
+-fi
+-PKGCONFIG=$ac_cv_path_PKGCONFIG
+-if test -n "$PKGCONFIG"; then
+-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $PKGCONFIG" >&5
+-printf "%s\n" "$PKGCONFIG" >&6; }
+-else
+-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+-printf "%s\n" "no" >&6; }
+-fi
+-
+-
+-fi
+-if test -z "$ac_cv_path_PKGCONFIG"; then
+-  ac_pt_PKGCONFIG=$PKGCONFIG
+-  # Extract the first word of "pkg-config", so it can be a program name with args.
+-set dummy pkg-config; ac_word=$2
+-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+-printf %s "checking for $ac_word... " >&6; }
+-if test ${ac_cv_path_ac_pt_PKGCONFIG+y}
+-then :
+-  printf %s "(cached) " >&6
+-else $as_nop
+-  case $ac_pt_PKGCONFIG in
+-  [\\/]* | ?:[\\/]*)
+-  ac_cv_path_ac_pt_PKGCONFIG="$ac_pt_PKGCONFIG" # Let the user override the test with a path.
+-  ;;
+-  *)
+-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+-as_dummy="$PATH:/usr/bin:/usr/local/bin"
+-for as_dir in $as_dummy
+-do
+-  IFS=$as_save_IFS
+-  case $as_dir in #(((
+-    '') as_dir=./ ;;
+-    */) ;;
+-    *) as_dir=$as_dir/ ;;
+-  esac
+-    for ac_exec_ext in '' $ac_executable_extensions; do
+-  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
+-    ac_cv_path_ac_pt_PKGCONFIG="$as_dir$ac_word$ac_exec_ext"
+-    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
+-    break 2
+-  fi
+-done
+-  done
+-IFS=$as_save_IFS
+-
+-  ;;
+-esac
+-fi
+-ac_pt_PKGCONFIG=$ac_cv_path_ac_pt_PKGCONFIG
+-if test -n "$ac_pt_PKGCONFIG"; then
+-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_pt_PKGCONFIG" >&5
+-printf "%s\n" "$ac_pt_PKGCONFIG" >&6; }
+-else
+-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+-printf "%s\n" "no" >&6; }
+-fi
+-
+-  if test "x$ac_pt_PKGCONFIG" = x; then
+-    PKGCONFIG="no"
+-  else
+-    case $cross_compiling:$ac_tool_warned in
+-yes:)
+-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: using cross tools not prefixed with host triplet" >&5
+-printf "%s\n" "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
+-ac_tool_warned=yes ;;
+-esac
+-    PKGCONFIG=$ac_pt_PKGCONFIG
+-  fi
+-else
+-  PKGCONFIG="$ac_cv_path_PKGCONFIG"
+-fi
+-
+-    fi
+-
+-    if test "x$PKGCONFIG" != "xno"; then
+-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for mit-krb5-gssapi options with pkg-config" >&5
+-printf %s "checking for mit-krb5-gssapi options with pkg-config... " >&6; }
+-            itexists=`
+-    if test -n ""; then
+-      PKG_CONFIG_LIBDIR=""
+-      export PKG_CONFIG_LIBDIR
+-    fi
+-         $PKGCONFIG --exists mit-krb5-gssapi >/dev/null 2>&1 && echo 1`
+-
+-      if test -z "$itexists"; then
+-                        PKGCONFIG="no"
+-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+-printf "%s\n" "no" >&6; }
+-      else
+-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: found" >&5
+-printf "%s\n" "found" >&6; }
+-      fi
+-    fi
+-
+   if test -z "$GSSAPI_INCS"; then
+      if test -n "$host_alias" -a -f "$GSSAPI_ROOT/bin/$host_alias-krb5-config"; then
+         GSSAPI_INCS=`$GSSAPI_ROOT/bin/$host_alias-krb5-config --cflags gssapi`
+-     elif test "$PKGCONFIG" != "no" ; then
+-        GSSAPI_INCS=`$PKGCONFIG --cflags mit-krb5-gssapi`
++     elif test -f "$KRB5CONFIG"; then
++        GSSAPI_INCS=`$KRB5CONFIG --cflags gssapi`
+      elif test "$GSSAPI_ROOT" != "yes"; then
+         GSSAPI_INCS="-I$GSSAPI_ROOT/include"
+      fi
+@@ -24561,147 +24444,11 @@ printf "%s\n" "#define HAVE_GSSAPI 1" >>confdefs.h
+         LIBS="-lgssapi_krb5 -lresolv $LIBS"
+         ;;
+      *)
+-
+-    if test -n "$PKG_CONFIG"; then
+-      PKGCONFIG="$PKG_CONFIG"
+-    else
+-      if test -n "$ac_tool_prefix"; then
+-  # Extract the first word of "${ac_tool_prefix}pkg-config", so it can be a program name with args.
+-set dummy ${ac_tool_prefix}pkg-config; ac_word=$2
+-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+-printf %s "checking for $ac_word... " >&6; }
+-if test ${ac_cv_path_PKGCONFIG+y}
+-then :
+-  printf %s "(cached) " >&6
+-else $as_nop
+-  case $PKGCONFIG in
+-  [\\/]* | ?:[\\/]*)
+-  ac_cv_path_PKGCONFIG="$PKGCONFIG" # Let the user override the test with a path.
+-  ;;
+-  *)
+-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+-as_dummy="$PATH:/usr/bin:/usr/local/bin"
+-for as_dir in $as_dummy
+-do
+-  IFS=$as_save_IFS
+-  case $as_dir in #(((
+-    '') as_dir=./ ;;
+-    */) ;;
+-    *) as_dir=$as_dir/ ;;
+-  esac
+-    for ac_exec_ext in '' $ac_executable_extensions; do
+-  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
+-    ac_cv_path_PKGCONFIG="$as_dir$ac_word$ac_exec_ext"
+-    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
+-    break 2
+-  fi
+-done
+-  done
+-IFS=$as_save_IFS
+-
+-  ;;
+-esac
+-fi
+-PKGCONFIG=$ac_cv_path_PKGCONFIG
+-if test -n "$PKGCONFIG"; then
+-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $PKGCONFIG" >&5
+-printf "%s\n" "$PKGCONFIG" >&6; }
+-else
+-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+-printf "%s\n" "no" >&6; }
+-fi
+-
+-
+-fi
+-if test -z "$ac_cv_path_PKGCONFIG"; then
+-  ac_pt_PKGCONFIG=$PKGCONFIG
+-  # Extract the first word of "pkg-config", so it can be a program name with args.
+-set dummy pkg-config; ac_word=$2
+-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+-printf %s "checking for $ac_word... " >&6; }
+-if test ${ac_cv_path_ac_pt_PKGCONFIG+y}
+-then :
+-  printf %s "(cached) " >&6
+-else $as_nop
+-  case $ac_pt_PKGCONFIG in
+-  [\\/]* | ?:[\\/]*)
+-  ac_cv_path_ac_pt_PKGCONFIG="$ac_pt_PKGCONFIG" # Let the user override the test with a path.
+-  ;;
+-  *)
+-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+-as_dummy="$PATH:/usr/bin:/usr/local/bin"
+-for as_dir in $as_dummy
+-do
+-  IFS=$as_save_IFS
+-  case $as_dir in #(((
+-    '') as_dir=./ ;;
+-    */) ;;
+-    *) as_dir=$as_dir/ ;;
+-  esac
+-    for ac_exec_ext in '' $ac_executable_extensions; do
+-  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
+-    ac_cv_path_ac_pt_PKGCONFIG="$as_dir$ac_word$ac_exec_ext"
+-    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
+-    break 2
+-  fi
+-done
+-  done
+-IFS=$as_save_IFS
+-
+-  ;;
+-esac
+-fi
+-ac_pt_PKGCONFIG=$ac_cv_path_ac_pt_PKGCONFIG
+-if test -n "$ac_pt_PKGCONFIG"; then
+-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_pt_PKGCONFIG" >&5
+-printf "%s\n" "$ac_pt_PKGCONFIG" >&6; }
+-else
+-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+-printf "%s\n" "no" >&6; }
+-fi
+-
+-  if test "x$ac_pt_PKGCONFIG" = x; then
+-    PKGCONFIG="no"
+-  else
+-    case $cross_compiling:$ac_tool_warned in
+-yes:)
+-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: using cross tools not prefixed with host triplet" >&5
+-printf "%s\n" "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
+-ac_tool_warned=yes ;;
+-esac
+-    PKGCONFIG=$ac_pt_PKGCONFIG
+-  fi
+-else
+-  PKGCONFIG="$ac_cv_path_PKGCONFIG"
+-fi
+-
+-    fi
+-
+-    if test "x$PKGCONFIG" != "xno"; then
+-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for mit-krb5-gssapi options with pkg-config" >&5
+-printf %s "checking for mit-krb5-gssapi options with pkg-config... " >&6; }
+-            itexists=`
+-    if test -n ""; then
+-      PKG_CONFIG_LIBDIR=""
+-      export PKG_CONFIG_LIBDIR
+-    fi
+-         $PKGCONFIG --exists mit-krb5-gssapi >/dev/null 2>&1 && echo 1`
+-
+-      if test -z "$itexists"; then
+-                        PKGCONFIG="no"
+-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+-printf "%s\n" "no" >&6; }
+-      else
+-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: found" >&5
+-printf "%s\n" "found" >&6; }
+-      fi
+-    fi
+-
+         if test -n "$host_alias" -a -f "$GSSAPI_ROOT/bin/$host_alias-krb5-config"; then
+                                  gss_libs=`$GSSAPI_ROOT/bin/$host_alias-krb5-config --libs gssapi`
+            LIBS="$gss_libs $LIBS"
+-        elif test "$PKGCONFIG" != "no" ; then
+-           gss_libs=`$PKGCONFIG --libs mit-krb5-gssapi`
++        elif test -f "$KRB5CONFIG"; then
++                                 gss_libs=`$KRB5CONFIG --libs gssapi`
+            LIBS="$gss_libs $LIBS"
+         else
+            case $host in
+@@ -24947,8 +24694,10 @@ printf "%s\n" "$as_me: PKG_CONFIG_LIBDIR will be set to \"$OPENSSL_PCDIR\"" >&6;
+ 
+             LIB_OPENSSL="$PREFIX_OPENSSL/lib$libsuff"
+     if test "$PREFIX_OPENSSL" != "/usr" ; then
+-      SSL_LDFLAGS="-L$LIB_OPENSSL"
+-      SSL_CPPFLAGS="-I$PREFIX_OPENSSL/include"
++      if test -z $SSL_LDFLAGS; then
++          SSL_LDFLAGS="-L$LIB_OPENSSL"
++          SSL_CPPFLAGS="-I$PREFIX_OPENSSL/include"
++      fi
+     fi
+     SSL_CPPFLAGS="$SSL_CPPFLAGS -I$PREFIX_OPENSSL/include/openssl"
+     ;;
+@@ -25101,12 +24850,14 @@ printf "%s\n" "found" >&6; }
+     fi
+          $PKGCONFIG --libs-only-l --libs-only-other openssl 2>/dev/null`
+ 
+-      SSL_LDFLAGS=`
++      if test -z $SSL_LDFLAGS; then
++        SSL_LDFLAGS=`
+     if test -n "$OPENSSL_PCDIR"; then
+       PKG_CONFIG_LIBDIR="$OPENSSL_PCDIR"
+       export PKG_CONFIG_LIBDIR
+     fi
+          $PKGCONFIG --libs-only-L openssl 2>/dev/null`
++      fi
+ 
+       SSL_CPPFLAGS=`
+     if test -n "$OPENSSL_PCDIR"; then
+@@ -30557,15 +30308,17 @@ printf "%s\n" "$as_me: -l is $LIB_H2" >&6;}
+     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: -I is $CPP_H2" >&5
+ printf "%s\n" "$as_me: -I is $CPP_H2" >&6;}
+ 
+-    LD_H2=`
++    if test -z $LD_H2; then
++        LD_H2=`
+     if test -n "$want_nghttp2_path"; then
+       PKG_CONFIG_LIBDIR="$want_nghttp2_path"
+       export PKG_CONFIG_LIBDIR
+     fi
+ 
+-      $PKGCONFIG --libs-only-L libnghttp2`
+-    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: -L is $LD_H2" >&5
++          $PKGCONFIG --libs-only-L libnghttp2`
++        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: -L is $LD_H2" >&5
+ printf "%s\n" "$as_me: -L is $LD_H2" >&6;}
++    fi
+ 
+     LDFLAGS="$LDFLAGS $LD_H2"
+     CPPFLAGS="$CPPFLAGS $CPP_H2"
