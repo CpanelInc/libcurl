@@ -15,8 +15,8 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.80.0
-%define release_prefix 2
+Version: 7.81.0
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -165,6 +165,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Wed Jan 05 2022 Cory McIntire <cory@cpanel.net> - 7.81.0-1
+- EA-10408: Update libcurl from v7.80.0 to v7.81.0
+
 * Tue Dec 28 2021 Dan Muey <dan@cpanel.net> - 7.80.0-2
 - ZC-9589: Update DISABLE_BUILD to match OBS
 
