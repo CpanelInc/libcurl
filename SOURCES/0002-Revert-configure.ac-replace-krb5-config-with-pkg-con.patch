@@ -13,10 +13,10 @@ This reverts commit 6fe4e7d3bfc1520da032ea067b4712cc1357f016.
  1 file changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 81b8b55..ff1e9e7 100644
+index a4e3e24..5548db8 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1679,17 +1679,18 @@ AC_ARG_WITH(gssapi,
+@@ -1703,17 +1703,18 @@ AC_ARG_WITH(gssapi,
    fi
  ])
  
@@ -38,7 +38,7 @@ index 81b8b55..ff1e9e7 100644
       elif test "$GSSAPI_ROOT" != "yes"; then
          GSSAPI_INCS="-I$GSSAPI_ROOT/include"
       fi
-@@ -1774,14 +1775,15 @@ if test x"$want_gss" = xyes; then
+@@ -1798,14 +1799,15 @@ if test x"$want_gss" = xyes; then
          LIBS="-lgssapi_krb5 -lresolv $LIBS"
          ;;
       *)
