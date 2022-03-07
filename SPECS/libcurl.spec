@@ -15,7 +15,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.81.0
+Version: 7.82.0
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -26,24 +26,23 @@ URL: http://curl.haxx.se/
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 
 # ***NOTE*** This patch is 'built with' the 0001 & 0002 patches.
-# The 0001 & 0002 (configure.ac) patches in SOURCES are not used directly during the RPM build process,
-# they are used for building the 0003 patch itself whenever a newer version of curl is released.
+# The 0001 (configure.ac) patche in SOURCES are not used directly during the RPM build process,
+# it is used for building the 0002 patch itself whenever a newer version of curl is released.
 # General process here is:
 #
 # 1. Download/extract latest version of curl, and initial a git repo there as so:
 #   1a. git init .
 #   1b. git add .
 #   1c. git commit -m "init"
-# 2. Create a patches branch, and apply the 0001 & 0002 patches to the extracted content as so:
+# 2. Create a patches branch, and apply the 0001 patche to the extracted content as so:
 #   2a. git checkout -b "patches"
 #   2b. git am </path/to/0001patch>
-#   2c. git am </path/to/0002patch>
 # 3. Run "autoconf" to update the configure file, and then commit the updated file to the patches branch:
 #   3a. git add configure
 #   3b. git commit
 # 4. Build the final patch files with:
 #   4a. git format-patch --zero-commit --no-signature master..patches
-Patch1: 0003-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
+Patch1: 0002-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
 
 %if 0%{?rhel} < 7
 Requires: libssh2 >= 1.4.2
@@ -165,6 +164,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Mon Mar 07 2022 Travis Holloway <t.holloway@cpanel.net> - 7.82.0-1
+- EA-10537: Update libcurl from v7.81.0 to v7.82.0
+
 * Wed Jan 05 2022 Cory McIntire <cory@cpanel.net> - 7.81.0-1
 - EA-10408: Update libcurl from v7.80.0 to v7.81.0
 
