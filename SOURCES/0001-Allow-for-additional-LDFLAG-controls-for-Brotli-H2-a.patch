@@ -11,10 +11,10 @@ Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
  3 files changed, 24 insertions(+), 7 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index d431870..62380b9 100644
+index d24daea..9ae5809 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1327,7 +1327,9 @@ if test X"$OPT_BROTLI" != Xno; then
+@@ -1328,7 +1328,9 @@ if test X"$OPT_BROTLI" != Xno; then
    dnl if given with a prefix, we set -L and -I based on that
    if test -n "$PREFIX_BROTLI"; then
      LIB_BROTLI="-lbrotlidec"
@@ -25,7 +25,7 @@ index d431870..62380b9 100644
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -2605,9 +2607,11 @@ if test X"$want_nghttp2" != Xno; then
+@@ -2610,9 +2612,11 @@ if test X"$want_nghttp2" != Xno; then
        $PKGCONFIG --cflags-only-I libnghttp2`
      AC_MSG_NOTICE([-I is $CPP_H2])
  
@@ -70,10 +70,10 @@ index c3c70ee..1854c51 100644
        SSL_CPPFLAGS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --cflags-only-I openssl 2>/dev/null`
 diff --git a/m4/libtool.m4 b/m4/libtool.m4
-index c4c0294..7599bd4 100644
+index e7b6833..256b38e 100644
 --- a/m4/libtool.m4
 +++ b/m4/libtool.m4
-@@ -2378,6 +2378,15 @@ hardcode_into_libs=no
+@@ -2398,6 +2398,15 @@ hardcode_into_libs=no
  # flags to be left without arguments
  need_version=unknown
  
