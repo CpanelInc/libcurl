@@ -11,10 +11,10 @@ Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
  3 files changed, 24 insertions(+), 7 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index d24daea..9ae5809 100644
+index de2dee5..aaebe87 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1328,7 +1328,9 @@ if test X"$OPT_BROTLI" != Xno; then
+@@ -1332,7 +1332,9 @@ if test X"$OPT_BROTLI" != Xno; then
    dnl if given with a prefix, we set -L and -I based on that
    if test -n "$PREFIX_BROTLI"; then
      LIB_BROTLI="-lbrotlidec"
@@ -25,7 +25,7 @@ index d24daea..9ae5809 100644
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -2610,9 +2612,11 @@ if test X"$want_nghttp2" != Xno; then
+@@ -2619,9 +2621,11 @@ if test X"$want_nghttp2" != Xno; then
        $PKGCONFIG --cflags-only-I libnghttp2`
      AC_MSG_NOTICE([-I is $CPP_H2])
  
@@ -41,10 +41,10 @@ index d24daea..9ae5809 100644
      DIR_H2=`echo $LD_H2 | $SED -e 's/^-L//'`
    elif test x"$want_nghttp2_path" != x; then
 diff --git a/m4/curl-openssl.m4 b/m4/curl-openssl.m4
-index c3c70ee..1854c51 100644
+index bdcbfde..1d18c5a 100644
 --- a/m4/curl-openssl.m4
 +++ b/m4/curl-openssl.m4
-@@ -97,8 +97,10 @@ if test "x$OPT_OPENSSL" != xno; then
+@@ -99,8 +99,10 @@ if test "x$OPT_OPENSSL" != xno; then
      dnl via --with-openssl
      LIB_OPENSSL="$PREFIX_OPENSSL/lib$libsuff"
      if test "$PREFIX_OPENSSL" != "/usr" ; then
@@ -57,7 +57,7 @@ index c3c70ee..1854c51 100644
      fi
      SSL_CPPFLAGS="$SSL_CPPFLAGS -I$PREFIX_OPENSSL/include/openssl"
      ;;
-@@ -112,8 +114,10 @@ if test "x$OPT_OPENSSL" != xno; then
+@@ -114,8 +116,10 @@ if test "x$OPT_OPENSSL" != xno; then
        SSL_LIBS=`CURL_EXPORT_PCDIR([$OPENSSL_PCDIR]) dnl
          $PKGCONFIG --libs-only-l --libs-only-other openssl 2>/dev/null`
  
