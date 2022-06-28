@@ -166,6 +166,10 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %changelog
 * Mon Jun 27 2022 Cory McIntire <cory@cpanel.net> - 7.84.0-1
 - EA-10790: Update libcurl from v7.83.1 to v7.84.0
+- CVE-2022-32208: FTP-KRB bad message verification
+- CVE-2022-32207: Unpreserved file permissions
+- CVE-2022-32206: HTTP compression denial of service
+- CVE-2022-32205: Set-Cookie denial of service
 
 * Wed May 11 2022 Cory McIntire <cory@cpanel.net> - 7.83.1-1
 - EA-10702: Update libcurl from v7.83.0 to v7.83.1
