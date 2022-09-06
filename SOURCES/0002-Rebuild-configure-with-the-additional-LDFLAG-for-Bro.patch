@@ -9,10 +9,10 @@ Subject: [PATCH 2/2] Rebuild configure with the additional LDFLAG for Brotli,
  1 file changed, 30 insertions(+), 7 deletions(-)
 
 diff --git a/configure b/configure
-index c16635f..89290d1 100755
+index 20f5940..6daf23c 100755
 --- a/configure
 +++ b/configure
-@@ -1019,6 +1019,9 @@ CURL_LT_SHLIB_USE_NO_UNDEFINED_TRUE
+@@ -1020,6 +1020,9 @@ CURL_LT_SHLIB_USE_NO_UNDEFINED_TRUE
  CURL_LT_SHLIB_USE_VERSION_INFO_FALSE
  CURL_LT_SHLIB_USE_VERSION_INFO_TRUE
  LT_SYS_LIBRARY_PATH
@@ -22,7 +22,7 @@ index c16635f..89290d1 100755
  OTOOL64
  OTOOL
  LIPO
-@@ -1273,6 +1276,9 @@ LDFLAGS
+@@ -1274,6 +1277,9 @@ LDFLAGS
  LIBS
  CPPFLAGS
  CPP
@@ -32,7 +32,7 @@ index c16635f..89290d1 100755
  LT_SYS_LIBRARY_PATH'
  
  
-@@ -2159,6 +2165,9 @@ Some influential environment variables:
+@@ -2160,6 +2166,9 @@ Some influential environment variables:
    CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
                you have headers in a nonstandard directory <include dir>
    CPP         C preprocessor
@@ -42,7 +42,7 @@ index c16635f..89290d1 100755
    LT_SYS_LIBRARY_PATH
                User-defined run-time library search path.
  
-@@ -14850,6 +14859,12 @@ need_version=unknown
+@@ -14863,6 +14872,12 @@ need_version=unknown
  
  
  
@@ -55,7 +55,7 @@ index c16635f..89290d1 100755
  case $host_os in
  aix3*)
    version_type=linux # correct to gnu/linux during the next big refactor
-@@ -23298,7 +23313,9 @@ printf "%s\n" "found" >&6; }
+@@ -23305,7 +23320,9 @@ printf "%s\n" "found" >&6; }
  
      if test -n "$PREFIX_BROTLI"; then
      LIB_BROTLI="-lbrotlidec"
@@ -66,7 +66,7 @@ index c16635f..89290d1 100755
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -25556,8 +25573,10 @@ printf "%s\n" "$as_me: PKG_CONFIG_LIBDIR will be set to \"$OPENSSL_PCDIR\"" >&6;
+@@ -25560,8 +25577,10 @@ printf "%s\n" "$as_me: PKG_CONFIG_LIBDIR will be set to \"$OPENSSL_PCDIR\"" >&6;
  
              LIB_OPENSSL="$PREFIX_OPENSSL/lib$libsuff"
      if test "$PREFIX_OPENSSL" != "/usr" ; then
@@ -79,7 +79,7 @@ index c16635f..89290d1 100755
      fi
      SSL_CPPFLAGS="$SSL_CPPFLAGS -I$PREFIX_OPENSSL/include/openssl"
      ;;
-@@ -25710,12 +25729,14 @@ printf "%s\n" "found" >&6; }
+@@ -25714,12 +25733,14 @@ printf "%s\n" "found" >&6; }
      fi
           $PKGCONFIG --libs-only-l --libs-only-other openssl 2>/dev/null`
  
@@ -95,7 +95,7 @@ index c16635f..89290d1 100755
  
        SSL_CPPFLAGS=`
      if test -n "$OPENSSL_PCDIR"; then
-@@ -30209,15 +30230,17 @@ printf "%s\n" "$as_me: -l is $LIB_H2" >&6;}
+@@ -30230,15 +30251,17 @@ printf "%s\n" "$as_me: -l is $LIB_H2" >&6;}
      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: -I is $CPP_H2" >&5
  printf "%s\n" "$as_me: -I is $CPP_H2" >&6;}
  
