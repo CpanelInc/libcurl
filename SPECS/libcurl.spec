@@ -166,6 +166,8 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %changelog
 * Wed Dec 21 2022 Cory McIntire <cory@cpanel.net> - 7.87.0-1
 - EA-11118: Update libcurl from v7.86.0 to v7.87.0
+- CVE-2022-43551: Another HSTS bypass via IDN
+- CVE-2022-43552: HTTP Proxy deny use-after-free
 
 * Thu Oct 27 2022 Cory McIntire <cory@cpanel.net> - 7.86.0-1
 - EA-11016: Update libcurl from v7.85.0 to v7.86.0
