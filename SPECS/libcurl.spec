@@ -9,14 +9,14 @@
 %define _unpackaged_files_terminate_build 0
 %define _defaultdocdir %{_prefix}/share/doc
 %define ea_openssl_ver 1.1.1d-1
-%define ea_nghttp2_ver 1.20.0-7
+%define ea_nghttp2_ver 1.51.0-2
 
 %define debug_package %{nil}
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 7.87.0
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -164,6 +164,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Wed Feb 08 2023 Travis Holloway <t.holloway@cpanel.net> - 7.87.0-2
+- EA-11221: Bump minimum required nghttp2 version to 1.51.0-2
+
 * Wed Dec 21 2022 Cory McIntire <cory@cpanel.net> - 7.87.0-1
 - EA-11118: Update libcurl from v7.86.0 to v7.87.0
 - CVE-2022-43551: Another HSTS bypass via IDN
