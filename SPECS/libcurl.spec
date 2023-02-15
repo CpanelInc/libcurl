@@ -166,6 +166,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %changelog
 * Wed Feb 15 2023 Cory McIntire <cory@cpanel.net> - 7.88.0-1
 - EA-11241: Update libcurl from v7.87.0 to v7.88.0
+- CVE-2023-23916: HTTP multi-header compression denial of service
+- CVE-2023-23915: HSTS amnesia with --parallel
+- CVE-2023-23914: HSTS ignored on multiple requests
 
 * Wed Feb 08 2023 Travis Holloway <t.holloway@cpanel.net> - 7.87.0-2
 - EA-11221: Bump minimum required nghttp2 version to 1.51.0-2
