@@ -4700,7 +4700,7 @@ index 0000000..d4fc183
 +_EOF
 +fi
 diff --git a/m4/curl-openssl.m4 b/m4/curl-openssl.m4
-index 1992881..0455964 100644
+index e41569f..74e08ab 100644
 --- a/m4/curl-openssl.m4
 +++ b/m4/curl-openssl.m4
 @@ -99,8 +99,10 @@ if test "x$OPT_OPENSSL" != xno; then
