@@ -11,7 +11,7 @@ Subject: [PATCH 2/2] Rebuild configure with the additional LDFLAG for Brotli,
  create mode 100755 configure.orig
 
 diff --git a/configure b/configure
-index 1215126..bc7cc01 100755
+index ddda13a..e32ea42 100755
 --- a/configure
 +++ b/configure
 @@ -1023,6 +1023,9 @@ CURL_LT_SHLIB_USE_VERSION_INFO_FALSE
@@ -68,7 +68,7 @@ index 1215126..bc7cc01 100755
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -26231,8 +26248,10 @@ printf "%s\n" "$as_me: PKG_CONFIG_LIBDIR will be set to \"$OPENSSL_PCDIR\"" >&6;
+@@ -26230,8 +26247,10 @@ printf "%s\n" "$as_me: PKG_CONFIG_LIBDIR will be set to \"$OPENSSL_PCDIR\"" >&6;
  
              LIB_OPENSSL="$PREFIX_OPENSSL/lib$libsuff"
      if test "$PREFIX_OPENSSL" != "/usr" ; then
@@ -81,7 +81,7 @@ index 1215126..bc7cc01 100755
      fi
      ;;
    esac
-@@ -26384,12 +26403,14 @@ printf "%s\n" "found" >&6; }
+@@ -26383,12 +26402,14 @@ printf "%s\n" "found" >&6; }
      fi
           $PKGCONFIG --libs-only-l --libs-only-other openssl 2>/dev/null`
  
@@ -97,7 +97,7 @@ index 1215126..bc7cc01 100755
  
        SSL_CPPFLAGS=`
      if test -n "$OPENSSL_PCDIR"; then
-@@ -30916,15 +30937,17 @@ printf "%s\n" "$as_me: -l is $LIB_H2" >&6;}
+@@ -30914,15 +30935,17 @@ printf "%s\n" "$as_me: -l is $LIB_H2" >&6;}
      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: -I is $CPP_H2" >&5
  printf "%s\n" "$as_me: -I is $CPP_H2" >&6;}
  

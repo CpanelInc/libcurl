@@ -15,7 +15,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.88.0
+Version: 7.88.1
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -164,6 +164,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Mon Feb 20 2023 Cory McIntire <cory@cpanel.net> - 7.88.1-1
+- EA-11256: Update libcurl from v7.88.0 to v7.88.1
+
 * Wed Feb 15 2023 Cory McIntire <cory@cpanel.net> - 7.88.0-1
 - EA-11241: Update libcurl from v7.87.0 to v7.88.0
 - CVE-2023-23916: HTTP multi-header compression denial of service
