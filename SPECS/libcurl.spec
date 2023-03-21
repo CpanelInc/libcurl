@@ -15,7 +15,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 7.88.1
+Version: 8.0.1
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -164,6 +164,14 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Mon Mar 20 2023 Cory McIntire <cory@cpanel.net> - 8.0.1-1
+- EA-11303: Update libcurl from v7.88.1 to v8.0.1
+- CVE-2023-27538: SSH connection too eager reuse still
+- CVE-2023-27537: HSTS double-free
+= CVE-2023-27536: GSS delegation too eager connection re-use
+= CVE-2023-27535: FTP too eager connection reuse
+- CVE-2023-27534: SFTP path ~ resolving discrepancy
+
 * Mon Feb 20 2023 Cory McIntire <cory@cpanel.net> - 7.88.1-1
 - EA-11256: Update libcurl from v7.88.0 to v7.88.1
 
