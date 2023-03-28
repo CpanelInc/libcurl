@@ -28,12 +28,12 @@ sub _get_required {
     if ( !$res->{success} ) {
         die "Could not GET libcurl dist page ($res->{status} $res->{reason})\n";
     }
-    my @libcurl = sort { $b <=> $a } ( $res->{content} =~ m{href="/download/curl-7\.([0-9]+\.[0-9]+)\.tar\.gz"}g );
+    my @libcurl = sort { $b <=> $a } ( $res->{content} =~ m{href="/download/curl-[78]\.([0-9]+\.[0-9]+)\.tar\.gz"}g );
     if ( !@libcurl ) {
         die "Could not find libcurl versions\n";
     }
 
-    my $version = "7\.$libcurl[0]";
+    my $version = "8.$libcurl[0]";
     my $name    = "curl-$version.tar.gz";
     my $url     = "https://curl.haxx.se/download/$name";
 
