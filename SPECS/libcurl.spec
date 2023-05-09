@@ -11,12 +11,10 @@
 %define ea_openssl_ver 1.1.1d-1
 %define ea_nghttp2_ver 1.51.0-2
 
-%define debug_package %{nil}
-
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 8.0.1
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -164,6 +162,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Tue May 09 2023 Brian Mendoza <brian.mendoza@cpanel.net> - 8.0.1-2
+- ZC-10936: Clean up Makefile and remove debug-package-nil
+
 * Mon Mar 20 2023 Cory McIntire <cory@cpanel.net> - 8.0.1-1
 - EA-11303: Update libcurl from v7.88.1 to v8.0.1
 - CVE-2023-27538: SSH connection too eager reuse still
