@@ -51,6 +51,17 @@ Requires: libssh2 >= 1.8.0
 Requires: ea-openssl11 >= %{ea_openssl_ver}
 BuildRequires: ea-openssl11 >= %{ea_openssl_ver}
 BuildRequires: ea-openssl11-devel >= %{ea_openssl_ver}
+%if 0%{?rhel} < 7
+BuildRequires: devtoolset-7-toolchain
+BuildRequires: devtoolset-7-libatomic-devel
+BuildRequires: devtoolset-7-gcc
+BuildRequires: devtoolset-7-gcc-c++
+%else
+BuildRequires: devtoolset-8-toolchain
+BuildRequires: devtoolset-8-libatomic-devel
+BuildRequires: devtoolset-8-gcc
+BuildRequires: devtoolset-8-gcc-c++
+%endif
 %else
 # In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
 Requires: openssl
@@ -91,6 +102,13 @@ headers, and manual pages to develop applications using libcurl.
 %patch1 -p1 -b .sslldflags
 
 %build
+%if 0%{?rhel} < 8
+%if 0%{?rhel} < 7
+. /opt/rh/devtoolset-7/enable
+%else
+. /opt/rh/devtoolset-8/enable
+%endif
+%endif
 cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.rpm; fi)
 
 export LIBS="-ldl"
