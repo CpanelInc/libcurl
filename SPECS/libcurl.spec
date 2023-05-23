@@ -13,8 +13,8 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 8.0.1
-%define release_prefix 2
+Version: 8.1.1
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -162,6 +162,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Tue May 23 2023 Cory McIntire <cory@cpanel.net> - 8.1.1-1
+- EA-11432: Update libcurl from v8.0.1 to v8.1.1
+
 * Tue May 09 2023 Brian Mendoza <brian.mendoza@cpanel.net> - 8.0.1-2
 - ZC-10936: Clean up Makefile and remove debug-package-nil
 
