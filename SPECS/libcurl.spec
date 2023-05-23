@@ -164,6 +164,10 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %changelog
 * Tue May 23 2023 Cory McIntire <cory@cpanel.net> - 8.1.1-1
 - EA-11432: Update libcurl from v8.0.1 to v8.1.1
+   - CVE-2023-28322: more POST-after-PUT confusion
+   - CVE-2023-28321: IDN wildcard match
+   - CVE-2023-28320: siglongjmp race condition
+   - CVE-2023-28319: UAF in SSH sha256 fingerprint check
 
 * Tue May 09 2023 Brian Mendoza <brian.mendoza@cpanel.net> - 8.0.1-2
 - ZC-10936: Clean up Makefile and remove debug-package-nil
