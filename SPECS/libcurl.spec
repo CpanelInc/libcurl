@@ -13,7 +13,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 8.1.1
+Version: 8.1.2
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -180,6 +180,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Tue May 30 2023 Cory McIntire <cory@cpanel.net> - 8.1.2-1
+- EA-11448: Update libcurl from v8.1.1 to v8.1.2
+
 * Tue May 23 2023 Cory McIntire <cory@cpanel.net> - 8.1.1-1
 - EA-11432: Update libcurl from v8.0.1 to v8.1.1
    - CVE-2023-28322: more POST-after-PUT confusion
