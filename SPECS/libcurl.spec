@@ -11,11 +11,9 @@
 %define ea_openssl_ver 1.1.1d-1
 %define ea_nghttp2_ver 1.51.0-2
 
-%define debug_package %{nil}
-
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 8.0.1
+Version: 8.1.2
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -53,6 +51,17 @@ Requires: libssh2 >= 1.8.0
 Requires: ea-openssl11 >= %{ea_openssl_ver}
 BuildRequires: ea-openssl11 >= %{ea_openssl_ver}
 BuildRequires: ea-openssl11-devel >= %{ea_openssl_ver}
+%if 0%{?rhel} < 7
+BuildRequires: devtoolset-7-toolchain
+BuildRequires: devtoolset-7-libatomic-devel
+BuildRequires: devtoolset-7-gcc
+BuildRequires: devtoolset-7-gcc-c++
+%else
+BuildRequires: devtoolset-8-toolchain
+BuildRequires: devtoolset-8-libatomic-devel
+BuildRequires: devtoolset-8-gcc
+BuildRequires: devtoolset-8-gcc-c++
+%endif
 %else
 # In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
 Requires: openssl
@@ -93,6 +102,13 @@ headers, and manual pages to develop applications using libcurl.
 %patch1 -p1 -b .sslldflags
 
 %build
+%if 0%{?rhel} < 8
+%if 0%{?rhel} < 7
+. /opt/rh/devtoolset-7/enable
+%else
+. /opt/rh/devtoolset-8/enable
+%endif
+%endif
 cd %{curlroot} && (if [ -f configure.in ]; then mv -f configure.in configure.in.rpm; fi)
 
 export LIBS="-ldl"
@@ -164,6 +180,19 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Tue May 30 2023 Cory McIntire <cory@cpanel.net> - 8.1.2-1
+- EA-11448: Update libcurl from v8.1.1 to v8.1.2
+
+* Tue May 23 2023 Cory McIntire <cory@cpanel.net> - 8.1.1-1
+- EA-11432: Update libcurl from v8.0.1 to v8.1.1
+   - CVE-2023-28322: more POST-after-PUT confusion
+   - CVE-2023-28321: IDN wildcard match
+   - CVE-2023-28320: siglongjmp race condition
+   - CVE-2023-28319: UAF in SSH sha256 fingerprint check
+
+* Tue May 09 2023 Brian Mendoza <brian.mendoza@cpanel.net> - 8.0.1-2
+- ZC-10936: Clean up Makefile and remove debug-package-nil
+
 * Mon Mar 20 2023 Cory McIntire <cory@cpanel.net> - 8.0.1-1
 - EA-11303: Update libcurl from v7.88.1 to v8.0.1
 - CVE-2023-27538: SSH connection too eager reuse still
