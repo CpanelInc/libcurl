@@ -182,6 +182,7 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %changelog
 * Wed Jul 19 2023 Cory McIntire <cory@cpanel.net> - 8.2.0-1
 - EA-11560: Update libcurl from v8.1.2 to v8.2.0
+- CVE-2023-32001 curl: fopen race condition
 
 * Tue May 30 2023 Cory McIntire <cory@cpanel.net> - 8.1.2-1
 - EA-11448: Update libcurl from v8.1.1 to v8.1.2
