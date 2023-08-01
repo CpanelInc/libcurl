@@ -15,7 +15,7 @@ Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
  create mode 100644 m4/curl-openssl.m4.orig
 
 diff --git a/configure.ac b/configure.ac
-index f93a3de..33a5256 100644
+index 71b9f5b..6a81296 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -1503,7 +1503,9 @@ if test X"$OPT_BROTLI" != Xno; then
