@@ -9,7 +9,7 @@ Subject: [PATCH 2/2] Rebuild configure with the additional LDFLAG for Brotli,
  1 file changed, 30 insertions(+), 7 deletions(-)
 
 diff --git a/configure b/configure
-index 2bbf996..f91c72e 100755
+index 013fc76..ee11608 100755
 --- a/configure
 +++ b/configure
 @@ -1023,6 +1023,9 @@ CURL_LT_SHLIB_USE_VERSION_INFO_FALSE
