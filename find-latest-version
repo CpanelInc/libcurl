@@ -51,7 +51,7 @@ sub _add_sum {
     $hr->{tarball}{sum}{type} = "gpg";
     $hr->{tarball}{sum}{gpg}  = {
         key_url        => 'https://daniel.haxx.se/mykey.asc',
-        signature_data => $res->content,
+        signature_data => $res->{content},
         key_email      => 'daniel@haxx.se',
     };
 
