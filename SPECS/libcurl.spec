@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 8.3.0
-%define release_prefix 2
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -180,9 +180,6 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
-* Fri Sep 22 2023 Julian Brown <julian.brown@cpanel.net> - 8.3.0-2
-- ZC-11181: Remove gpg key as it is invalid
-
 * Wed Sep 13 2023 Cory McIntire <cory@cpanel.net> - 8.3.0-1
 - EA-11680: Update libcurl from v8.2.1 to v8.3.0
 - CVE-2023-38039: HTTP headers eat all memory
