@@ -182,6 +182,8 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %changelog
 * Wed Oct 11 2023 Cory McIntire <cory@cpanel.net> - 8.4.0-1
 - EA-11731: Update libcurl from v8.3.0 to v8.4.0
+- CVE-2023-38545 - SOCKS5 heap buffer overflow
+- CVE-2023-38546 - cookie injection with none file
 
 * Wed Sep 13 2023 Cory McIntire <cory@cpanel.net> - 8.3.0-1
 - EA-11680: Update libcurl from v8.2.1 to v8.3.0
