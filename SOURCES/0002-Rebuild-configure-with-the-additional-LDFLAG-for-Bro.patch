@@ -9,7 +9,7 @@ Subject: [PATCH 2/2] Rebuild configure with the additional LDFLAG for Brotli,
  1 file changed, 30 insertions(+), 7 deletions(-)
 
 diff --git a/configure b/configure
-index 04d1de1..98b1fce 100755
+index 2bd4ff2..5fc3014 100755
 --- a/configure
 +++ b/configure
 @@ -1021,6 +1021,9 @@ CURL_LT_SHLIB_USE_VERSION_INFO_FALSE
@@ -55,7 +55,7 @@ index 04d1de1..98b1fce 100755
  case $host_os in
  aix3*)
    version_type=linux # correct to gnu/linux during the next big refactor
-@@ -23977,7 +23992,9 @@ printf "%s\n" "found" >&6; }
+@@ -24361,7 +24376,9 @@ printf "%s\n" "found" >&6; }
  
      if test -n "$PREFIX_BROTLI"; then
      LIB_BROTLI="-lbrotlidec"
@@ -66,7 +66,7 @@ index 04d1de1..98b1fce 100755
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -26258,8 +26275,10 @@ printf "%s\n" "$as_me: PKG_CONFIG_LIBDIR will be set to \"$OPENSSL_PCDIR\"" >&6;
+@@ -26642,8 +26659,10 @@ printf "%s\n" "$as_me: PKG_CONFIG_LIBDIR will be set to \"$OPENSSL_PCDIR\"" >&6;
  
              LIB_OPENSSL="$PREFIX_OPENSSL/lib$libsuff"
      if test "$PREFIX_OPENSSL" != "/usr" ; then
@@ -79,7 +79,7 @@ index 04d1de1..98b1fce 100755
      fi
      ;;
    esac
-@@ -26411,12 +26430,14 @@ printf "%s\n" "found" >&6; }
+@@ -26795,12 +26814,14 @@ printf "%s\n" "found" >&6; }
      fi
           $PKGCONFIG --libs-only-l --libs-only-other openssl 2>/dev/null`
  
@@ -95,7 +95,7 @@ index 04d1de1..98b1fce 100755
  
        SSL_CPPFLAGS=`
      if test -n "$OPENSSL_PCDIR"; then
-@@ -30505,15 +30526,17 @@ printf "%s\n" "$as_me: -l is $LIB_H2" >&6;}
+@@ -30889,15 +30910,17 @@ printf "%s\n" "$as_me: -l is $LIB_H2" >&6;}
      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: -I is $CPP_H2" >&5
  printf "%s\n" "$as_me: -I is $CPP_H2" >&6;}
  
