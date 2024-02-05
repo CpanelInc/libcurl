@@ -126,6 +126,7 @@ export LIBS="-ldl"
  --enable-unix-sockets \
  --with-nghttp2=/opt/cpanel/nghttp2/ \
  --with-brotli=/opt/cpanel/ea-brotli/ \
+ --without-libpsl \
 %if 0%{?rhel} < 8
  SSL_LDFLAGS="-L/opt/cpanel/ea-openssl11/%{_lib} -Wl,-rpath=/opt/cpanel/ea-openssl11/%{_lib} " \
 %endif
@@ -182,6 +183,7 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %changelog
 * Mon Feb 05 2024 Cory McIntire <cory@cpanel.net> - 8.6.0-1
 - EA-11948: Update libcurl from v8.5.0 to v8.6.0
+- CVE-2024-0853: OCSP verification bypass with TLS session reuse
 
 * Wed Dec 06 2023 Cory McIntire <cory@cpanel.net> - 8.5.0-1
 - EA-11857: Update libcurl from v8.4.0 to v8.5.0
