@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 8.7.1
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -41,6 +41,7 @@ BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 # 4. Build the final patch files with:
 #   4a. git format-patch --zero-commit --no-signature master..patches
 Patch1: 0002-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
+Patch2: 0003-content_encoding-brotli-and-others-pass-through-0-le.patch
 
 %if 0%{?rhel} < 7
 Requires: libssh2 >= 1.4.2
@@ -100,6 +101,7 @@ headers, and manual pages to develop applications using libcurl.
 
 %setup -q -n curl-%{version}
 %patch1 -p1 -b .sslldflags
+%patch2 -p1 -b .curlopt
 
 %build
 %if 0%{?rhel} < 8
@@ -181,6 +183,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Mon Apr 15 2024 Cory McIntire <cory@cpanel.net> - 8.7.1-2
+- EA-12080: patch update that caused issues with CURLOPT_ACCEPT_ENCODING
+
 * Wed Mar 27 2024 Cory McIntire <cory@cpanel.net> - 8.7.1-1
 - EA-12051: Update libcurl from v8.6.0 to v8.7.1
 - CVE-2024-2466: TLS certificate check bypass with mbedTLS
