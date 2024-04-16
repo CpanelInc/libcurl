@@ -1,7 +1,7 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From e5a9b6be97bc1069f7b0d2981638acaf3272ed3c Mon Sep 17 00:00:00 2001
 From: Tim Mullin <tim@cpanel.net>
 Date: Tue, 23 May 2023 13:55:11 +0000
-Subject: [PATCH 2/2] Rebuild configure with the additional LDFLAG for Brotli,
+Subject: [PATCH 2/3] Rebuild configure with the additional LDFLAG for Brotli,
  H2, and SSL
 
 ---
@@ -116,3 +116,6 @@ index 4fc60c3..793279f 100755
  
      DIR_H2=`echo $LD_H2 | $SED -e 's/^-L//'`
    elif test x"$want_nghttp2_path" != x; then
+-- 
+2.43.2
+
