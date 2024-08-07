@@ -1,4 +1,4 @@
-From 22a4d78e4df7e9ba6071de9ff6e9519ebe0d25d5 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Rishwanth Yeddula <rish@cpanel.net>
 Date: Thu, 12 Jul 2018 13:52:17 -0500
 Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
@@ -15,10 +15,10 @@ Subject: [PATCH 1/2] Allow for additional LDFLAG controls for Brotli, H2, and
  create mode 100644 m4/curl-openssl.m4.orig
 
 diff --git a/configure.ac b/configure.ac
-index a4ea9f7..779d0e7 100644
+index 1e18b81..b254dcd 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1434,7 +1434,9 @@ if test X"$OPT_BROTLI" != Xno; then
+@@ -1439,7 +1439,9 @@ if test X"$OPT_BROTLI" != Xno; then
    dnl if given with a prefix, we set -L and -I based on that
    if test -n "$PREFIX_BROTLI"; then
      LIB_BROTLI="-lbrotlidec"
@@ -29,7 +29,7 @@ index a4ea9f7..779d0e7 100644
      CPP_BROTLI=-I${PREFIX_BROTLI}/include
      DIR_BROTLI=${PREFIX_BROTLI}/lib$libsuff
    fi
-@@ -2783,9 +2785,11 @@ if test X"$want_nghttp2" != Xno; then
+@@ -2795,9 +2797,11 @@ if test X"$want_nghttp2" != Xno; then
        $PKGCONFIG --cflags-only-I libnghttp2`
      AC_MSG_NOTICE([-I is $CPP_H2])
  
@@ -4700,7 +4700,7 @@ index 0000000..d4fc183
 +_EOF
 +fi
 diff --git a/m4/curl-openssl.m4 b/m4/curl-openssl.m4
-index 2fb2abe..100d861 100644
+index 76107c2..7532eb0 100644
 --- a/m4/curl-openssl.m4
 +++ b/m4/curl-openssl.m4
 @@ -99,8 +99,10 @@ if test "x$OPT_OPENSSL" != xno; then
@@ -5173,6 +5173,3 @@ index e7b6833..256b38e 100644
  AC_ARG_VAR([LT_SYS_LIBRARY_PATH],
  [User-defined run-time library search path.])
  
--- 
-2.43.2
-
