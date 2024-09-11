@@ -13,7 +13,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 8.9.1
+Version: 8.10.0
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -40,7 +40,7 @@ BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 #   3b. git commit
 # 4. Build the final patch files with:
 #   4a. git format-patch --zero-commit --no-signature master..patches
-Patch1: 0002-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
+Patch1: 0001-Rebuild-configure-with-the-additional-LDFLAG-for-Bro.patch
 
 %if 0%{?rhel} < 7
 Requires: libssh2 >= 1.4.2
@@ -158,7 +158,7 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{prefix_bin}
 %dir %{prefix_inc}
 %dir %{prefix_lib}
-%doc CHANGES COPYING README
+%doc CHANGES.md COPYING README
 %doc docs/FAQ docs/FEATURES.md docs/INSTALL
 %doc docs/KNOWN_BUGS docs/THANKS
 %doc docs/TODO docs/VERSIONS.md
@@ -181,6 +181,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Wed Sep 11 2024 Cory McIntire <cory@cpanel.net> - 8.10.0-1
+- EA-12379: Update libcurl from v8.9.1 to v8.10.0
+
 * Thu Aug 01 2024 Cory McIntire <cory@cpanel.net> - 8.9.1-1
 - EA-12310: Update libcurl from v8.8.0 to v8.9.1
 - CVE-2024-7264: ASN.1 date parser overread
