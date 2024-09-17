@@ -183,6 +183,7 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %changelog
 * Wed Sep 11 2024 Cory McIntire <cory@cpanel.net> - 8.10.0-1
 - EA-12379: Update libcurl from v8.9.1 to v8.10.0
+- CVE-2024-8096: OCSP stapling bypass with GnuTLS
 
 * Thu Aug 01 2024 Cory McIntire <cory@cpanel.net> - 8.9.1-1
 - EA-12310: Update libcurl from v8.8.0 to v8.9.1
