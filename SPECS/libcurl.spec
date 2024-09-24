@@ -13,7 +13,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 8.10.0
+Version: 8.10.1
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -181,6 +181,9 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Thu Sep 19 2024 Cory McIntire <cory@cpanel.net> - 8.10.1-1
+- EA-12398: Update libcurl from v8.10.0 to v8.10.1
+
 * Wed Sep 11 2024 Cory McIntire <cory@cpanel.net> - 8.10.0-1
 - EA-12379: Update libcurl from v8.9.1 to v8.10.0
 - CVE-2024-8096: OCSP stapling bypass with GnuTLS

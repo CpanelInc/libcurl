@@ -1,4 +1,4 @@
-From 35a36a6faa6bab665659e6d1c9099c0ddbbc63f6 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Tim Mullin <tim@cpanel.net>
 Date: Tue, 23 May 2023 13:55:11 +0000
 Subject: [PATCH] Rebuild configure with the additional LDFLAG for Brotli, H2,
@@ -9,7 +9,7 @@ Subject: [PATCH] Rebuild configure with the additional LDFLAG for Brotli, H2,
  1 file changed, 30 insertions(+), 8 deletions(-)
 
 diff --git a/configure b/configure
-index ad3117b..8c1a99a 100755
+index 9fea065..9844d22 100755
 --- a/configure
 +++ b/configure
 @@ -1031,6 +1031,9 @@ CURL_LT_SHLIB_USE_VERSION_INFO_FALSE
@@ -117,6 +117,3 @@ index ad3117b..8c1a99a 100755
  
      DIR_H2=`echo $LD_H2 | $SED -e 's/^-L//'`
    elif test x"$want_nghttp2_path" != x; then
--- 
-2.43.2
-
