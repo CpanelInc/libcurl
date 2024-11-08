@@ -13,7 +13,7 @@
 
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
-Version: 8.10.1
+Version: 8.11.0
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
@@ -181,6 +181,10 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Wed Nov 06 2024 Cory McIntire <cory@cpanel.net> - 8.11.0-1
+- EA-12523: Update libcurl from v8.10.1 to v8.11.0
+- CVE-2024-9681: HSTS subdomain overwrites parent cache entry
+
 * Thu Sep 19 2024 Cory McIntire <cory@cpanel.net> - 8.10.1-1
 - EA-12398: Update libcurl from v8.10.0 to v8.10.1
 
