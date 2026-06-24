@@ -65,6 +65,7 @@ Patch15: 0015-CVE-2026-8927-url-detect-proxy-change-flush-digest.patch
 Patch16: 0016-CVE-2026-10536-http2-remove-stream-dependency-tracking.patch
 Patch17: 0017-CVE-2026-11564-vtls-native-ca-store-always-reinit.patch
 Patch18: 0018-CVE-2026-8932-tls-fix-incomplete-mtls-config-in-conn-reuse.patch
+Patch19: 0019-CVE-2026-12064-config2setopts-use-default-protocol-properly.patch
 %if 0%{?rhel} < 7
 Requires: libssh2 >= 1.4.2
 %else
@@ -141,6 +142,7 @@ headers, and manual pages to develop applications using libcurl.
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 %build
 %if 0%{?rhel} < 8
 %if 0%{?rhel} < 7
@@ -230,6 +232,7 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 - EA-13474: Security: backport CVE-2026-10536 (HTTP/2 stream-dependency tree UAF, Low)
 - EA-13474: Security: backport CVE-2026-11564 (native CA trust persists after handle reuse, Low)
 - EA-13474: Security: backport CVE-2026-8932 (incomplete mTLS config match in conn reuse, Low)
+- EA-13474: Security: backport CVE-2026-12064 (proto-default skips SSH host verification on schemeless URLs, Low)
 
 * Fri May  1 2026 Cory McIntire <cory@cpanel.net> - 8.17.0-4
 - EA-13421: Security: backport CVE-2026-5545 (HTTP Negotiate connection reuse auth check, Medium)
