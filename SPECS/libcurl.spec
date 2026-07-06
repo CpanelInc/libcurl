@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 8.17.0
-%define release_prefix 5
+%define release_prefix 6
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -66,6 +66,15 @@ Patch16: 0016-CVE-2026-10536-http2-remove-stream-dependency-tracking.patch
 Patch17: 0017-CVE-2026-11564-vtls-native-ca-store-always-reinit.patch
 Patch18: 0018-CVE-2026-8932-tls-fix-incomplete-mtls-config-in-conn-reuse.patch
 Patch19: 0019-CVE-2026-12064-config2setopts-use-default-protocol-properly.patch
+
+# EA-13474: additional CVE backports for curl 8.21.0 security fixes
+# (5 CVEs confirmed applicable by SCA audit, not backported in the
+# initial 8.21.0 pass above; CVE-2026-9545/9547/11352 confirmed NOT
+# applicable - HTTP/3-QUIC-only or libssh-only, not built by this spec)
+Patch20: 0020-CVE-2026-11586-ws-auto-pong-memory-exhaustion.patch
+Patch21: 0021-CVE-2026-11856-digest-cross-origin-state-leak.patch
+Patch22: 0022-CVE-2026-8926-netrc-wrong-user-password.patch
+Patch23: 0023-CVE-2026-8458-negotiate-connreuse-service-name.patch
 %if 0%{?rhel} < 7
 Requires: libssh2 >= 1.4.2
 %else
@@ -143,6 +152,10 @@ headers, and manual pages to develop applications using libcurl.
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
 %build
 %if 0%{?rhel} < 8
 %if 0%{?rhel} < 7
@@ -223,6 +236,12 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Mon Jul 06 2026 Cory McIntire <cory.mcintire@webpros.com> - 8.17.0-6
+- EA-13474: Security: backport CVE-2026-8458 (Negotiate connection reuse ignores CURLOPT_SERVICE_NAME, Low)
+- EA-13474: Security: backport CVE-2026-8926 (netrc returns wrong user's password on login mismatch, Low)
+- EA-13474: Security: backport CVE-2026-11586 (WebSocket auto-PONG unbounded memory allocation, Low)
+- EA-13474: Security: backport CVE-2026-11856 (cross-origin Digest auth state leak on handle reuse, Medium)
+
 * Tue Jun 24 2026 Cory McIntire <cory.mcintire@webpros.com> - 8.17.0-5
 - EA-13474: Security: backport CVE-2026-8924 (trailing dot domain super cookie bypass PSL, Low)
 - EA-13474: Security: backport CVE-2026-9079 (stale proxy password on NULL userpwd, Medium)
