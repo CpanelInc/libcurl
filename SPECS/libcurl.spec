@@ -14,7 +14,7 @@
 Summary: A utility for getting files from remote servers (FTP, HTTP, and others)
 Name: %{pkg_name}
 Version: 8.17.0
-%define release_prefix 4
+%define release_prefix 6
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Vendor: cPanel, Inc.
@@ -55,6 +55,26 @@ Patch9: 0009-tftp-filename-length-check.patch
 
 # EA-13421: CVE backports for curl 8.20.0 security fixes
 Patch10: 0010-backport-curl-8.20.0-CVE-security-fixes.patch
+
+# EA-13474: CVE backports for curl 8.21.0 security fixes
+Patch11: 0011-CVE-2026-8924-cookie-trailing-dot-super-cookie.patch
+Patch12: 0012-CVE-2026-9079-setopt-clear-proxy-auth-on-null.patch
+Patch13: 0013-CVE-2026-8286-url-fix-conn-reuse-starttls.patch
+Patch14: 0014-CVE-2026-9080-multi-handle-pause-in-socket-callback.patch
+Patch15: 0015-CVE-2026-8927-url-detect-proxy-change-flush-digest.patch
+Patch16: 0016-CVE-2026-10536-http2-remove-stream-dependency-tracking.patch
+Patch17: 0017-CVE-2026-11564-vtls-native-ca-store-always-reinit.patch
+Patch18: 0018-CVE-2026-8932-tls-fix-incomplete-mtls-config-in-conn-reuse.patch
+Patch19: 0019-CVE-2026-12064-config2setopts-use-default-protocol-properly.patch
+
+# EA-13474: additional CVE backports for curl 8.21.0 security fixes
+# (5 CVEs confirmed applicable by SCA audit, not backported in the
+# initial 8.21.0 pass above; CVE-2026-9545/9547/11352 confirmed NOT
+# applicable - HTTP/3-QUIC-only or libssh-only, not built by this spec)
+Patch20: 0020-CVE-2026-11586-ws-auto-pong-memory-exhaustion.patch
+Patch21: 0021-CVE-2026-11856-digest-cross-origin-state-leak.patch
+Patch22: 0022-CVE-2026-8926-netrc-wrong-user-password.patch
+Patch23: 0023-CVE-2026-8458-negotiate-connreuse-service-name.patch
 %if 0%{?rhel} < 7
 Requires: libssh2 >= 1.4.2
 %else
@@ -123,6 +143,19 @@ headers, and manual pages to develop applications using libcurl.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
 %build
 %if 0%{?rhel} < 8
 %if 0%{?rhel} < 7
@@ -203,6 +236,23 @@ install -m 755 -d %{buildroot}%{_defaultdocdir}
 %dir %{_defaultdocdir}
 
 %changelog
+* Mon Jul 06 2026 Cory McIntire <cory.mcintire@webpros.com> - 8.17.0-6
+- EA-13474: Security: backport CVE-2026-8458 (Negotiate connection reuse ignores CURLOPT_SERVICE_NAME, Low)
+- EA-13474: Security: backport CVE-2026-8926 (netrc returns wrong user's password on login mismatch, Low)
+- EA-13474: Security: backport CVE-2026-11586 (WebSocket auto-PONG unbounded memory allocation, Low)
+- EA-13474: Security: backport CVE-2026-11856 (cross-origin Digest auth state leak on handle reuse, Medium)
+
+* Tue Jun 24 2026 Cory McIntire <cory.mcintire@webpros.com> - 8.17.0-5
+- EA-13474: Security: backport CVE-2026-8924 (trailing dot domain super cookie bypass PSL, Low)
+- EA-13474: Security: backport CVE-2026-9079 (stale proxy password on NULL userpwd, Medium)
+- EA-13474: Security: backport CVE-2026-8286 (STARTTLS connection reuse ignores TLS config, Low)
+- EA-13474: Security: backport CVE-2026-9080 (UAF after curl_easy_pause in socket callback, Low)
+- EA-13474: Security: backport CVE-2026-8927 (cross-proxy Digest auth state leak via env proxy, Medium)
+- EA-13474: Security: backport CVE-2026-10536 (HTTP/2 stream-dependency tree UAF, Low)
+- EA-13474: Security: backport CVE-2026-11564 (native CA trust persists after handle reuse, Low)
+- EA-13474: Security: backport CVE-2026-8932 (incomplete mTLS config match in conn reuse, Low)
+- EA-13474: Security: backport CVE-2026-12064 (proto-default skips SSH host verification on schemeless URLs, Low)
+
 * Fri May  1 2026 Cory McIntire <cory@cpanel.net> - 8.17.0-4
 - EA-13421: Security: backport CVE-2026-5545 (HTTP Negotiate connection reuse auth check, Medium)
 - EA-13421: Security: backport CVE-2026-4873 (non-TLS STARTTLS connection reuse bypass, Low)
